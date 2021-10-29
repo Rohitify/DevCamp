@@ -1,0 +1,23 @@
+{
+  "name": "devcamp_backend",
+  "version": "1.0.0",
+  "description": "Camp info of verious dev program",
+  "main": "server.js",
+  "scripts": {
+    "start": "NODE_ENV=production node server",
+    "dev": "nodemon server"
+  },
+  "keywords": [
+    "Dev",
+    "Camp"
+  ],
+  "author": "Rohit Singh",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.14"
+  }
+}
