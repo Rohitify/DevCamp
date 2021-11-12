@@ -7,9 +7,11 @@ const advancedResults = require("../middleware/advancedResults");
 const { protect, authorize } = require("../middleware/auth");
 
 const coursesRoutes = require("./courses");
+const reviewsRoutes = require("./reviews");
 
 // Re-Route into other Resourses 
 router.use("/:bootcampId/courses", coursesRoutes);
+router.use("/:bootcampId/reviews", reviewsRoutes);
 
 router.route("/:id/photo")
   .put(protect, authorize("publisher", "admin"), bootcampPhotoUpload);
