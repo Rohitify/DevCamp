@@ -37,7 +37,7 @@ if(process.env.NODE_ENV === "development"){
 // File Upload 
 app.use(fileupload());
 
-// Sanitize data from NoSQL Injection 
+// Sanitize data from NoSQL Injection  { "username": {"$gt": ""}, "password": {"$gt": ""} }
 app.use(mongoSanitize());
 
 // Set static folder 
