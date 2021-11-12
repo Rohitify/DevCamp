@@ -2,7 +2,6 @@ const crypto = require("crypto");
 const asyncHandler = require("../middleware/async");
 const User = require("../models/User");
 const ErrorResponse = require("../middleware/error");
-const { buildOptions } = require("express-fileupload/lib/utilities");
 const sendEmail = require("../utils/sendEmail");
 
 exports.register = asyncHandler(async (req, res, next) => {
