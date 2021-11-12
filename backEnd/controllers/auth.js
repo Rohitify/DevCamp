@@ -120,6 +120,39 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
   sendTokenResponse(user, 200, res);
 });
 
+exports.updateDetails = asyncHandler(async (req, res, next) =>{
+
+  const updatedetails = {
+    name: req.body.name,
+    email: req.body.email
+  };
+
+  const user = await User.findByIdAndUpdate(req.user.id, updatedetails, {
+    new: true,
+    runValidators: true
+  });
+
+  res.status(200).json({
+    success: true,
+    data: user
+  });
+});
+
+exports.updatePassword = asyncHandler(async (req, res, next) =>{
+  const user = await User.findById(req.user.id).select("+password");
+
+  const isPassword = await user.matchPassword(req.body.currentPassword);
+  if(!isPassword){
+    return next(new ErrorResponse("Password is incorrect", 401));
+  }
+
+  user.password = req.body.newPassword;
+  await user.save();
+
+  sendTokenResponse(user, 200, res);
+
+});
+
 
 const sendTokenResponse = (user, statusCode, res) => {
   // Create token 
