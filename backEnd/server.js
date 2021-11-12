@@ -4,6 +4,11 @@ const morgan = require("morgan");
 const path = require("path");
 const fileupload = require("express-fileupload");
 const mongoSanitize = require("express-mongo-sanitize");
+const helmet = require("helmet");
+const xss = require("xss-clean");
+const rateLimit = require("express-rate-limit");
+const hpp = require("hpp");
+const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const errorHandler = require('./middleware/error');
 const connectDB = require("./config/db");
@@ -39,6 +44,26 @@ app.use(fileupload());
 
 // Sanitize data from NoSQL Injection  { "username": {"$gt": ""}, "password": {"$gt": ""} }
 app.use(mongoSanitize());
+
+// Set security headers 
+app.use(helmet());
+
+// stop html tag in data to prevent XSS Attacks
+app.use(xss());
+
+// Rate limiting on api calls in general
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 10mins
+  max: 200
+});
+
+app.use(limiter);
+
+// Prevent http param pollution 
+app.use(hpp());
+
+// Enable CORS for others domain to use public api 
+app.use(cors());
 
 // Set static folder 
 app.use(express.static(path.join(__dirname, "public")));
