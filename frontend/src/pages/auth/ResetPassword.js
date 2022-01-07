@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const ResetPassword = () => {
   return (
@@ -7,7 +8,7 @@ const ResetPassword = () => {
 				<div className="col-md-8 m-auto">
 					<div className="card bg-white py-2 px-4">
 						<div className="card-body">
-							<a href="login.html">Back to login</a>
+							<Link to="/login">Back to login</Link>
 							<h1 className="mb-2">Reset Password</h1>
 							<p>	Use this form to reset your password using the registered email address.</p>
 							<form>

@@ -13,7 +13,7 @@ const Register = () => {
 									Register to list your bootcamp or rate, review and favorite
 									bootcamps
 								</p>
-								<form>
+								<form> 
 									<div className="form-group">
 										<label for="name">Name</label>
 										<input

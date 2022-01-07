@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Login = () => {
   return (
@@ -9,7 +10,7 @@ const Login = () => {
 						<div className="card bg-white p-4 mb-4">
 							<div className="card-body">
 								<h1><i className="fas fa-sign-in-alt"></i> Login</h1>
-								<p>
+								<p> 
 									Log in to list your bootcamp or rate, review and favorite
 									bootcamps
 								</p>
@@ -42,7 +43,7 @@ const Login = () => {
 										/>
 									</div>
 								</form>
-								<p>	Forgot Password? <a href="reset-password.html">Reset Password</a></p>
+								<p>	Forgot Password? <Link to="/resetpassword">Reset Password</Link></p>
 							</div>
 						</div>
 					</div>

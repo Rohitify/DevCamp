@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 const Bootcamps = () => {
   return (
@@ -9,7 +10,7 @@ const Bootcamps = () => {
 					<div className="col-md-4">
 						<div className="card card-body mb-4">
 							<h4 className="mb-3">By Location</h4>
-							<form>
+							<form> 
 								<div className="row">
 									<div className="col-md-6">
 										<div className="form-group">
@@ -101,11 +102,11 @@ const Bootcamps = () => {
 								<div className="col-md-8">
 									<div className="card-body">
 										<h5 className="card-title">
-											<a href="bootcamp.html"
+											<NavLink to="bootcamp.html"
 												>Devworks Bootcamp
 												<span className="float-right badge badge-success"
 													>8.8</span
-												></a
+												></NavLink
 											>
 										</h5>
 										<span className="badge badge-dark mb-2">Boston, MA</span>
@@ -125,11 +126,11 @@ const Bootcamps = () => {
 								<div className="col-md-8">
 									<div className="card-body">
 										<h5 className="card-title">
-											<a href="bootcamp.html"
+											<NavLink to="bootcamp.html"
 												>ModernTech Bootcamp
 												<span className="float-right badge badge-success"
 													>7.5</span
-												></a
+												></NavLink
 											>
 										</h5>
 										<span className="badge badge-dark mb-2">Boston, MA</span>
@@ -148,11 +149,11 @@ const Bootcamps = () => {
 								<div className="col-md-8">
 									<div className="card-body">
 										<h5 className="card-title">
-											<a href="bootcamp.html"
+											<NavLink to="bootcamp.html"
 												>Codemasters
 												<span className="float-right badge badge-success"
 													>9.2</span
-												></a
+												></NavLink
 											>
 										</h5>
 										<span className="badge badge-dark mb-2">Burlington, VT</span>
@@ -172,11 +173,11 @@ const Bootcamps = () => {
 								<div className="col-md-8">
 									<div className="card-body">
 										<h5 className="card-title">
-											<a href="bootcamp.html"
+											<NavLink to="bootcamp.html"
 												>DevCentral Bootcamp
 												<span className="float-right badge badge-success"
 													>6.4</span
-												></a
+												></NavLink
 											>
 										</h5>
 										<span className="badge badge-dark mb-2">Kingston, RI</span>
@@ -192,13 +193,13 @@ const Bootcamps = () => {
 						<nav aria-label="Page navigation example">
 							<ul className="pagination">
 								<li className="page-item">
-									<a className="page-link" href="#">Previous</a>
+									<NavLink className="page-link" to="#">Previous</NavLink>
 								</li>
-								<li className="page-item"><a className="page-link" href="#">1</a></li>
-								<li className="page-item"><a className="page-link" href="#">2</a></li>
-								<li className="page-item"><a className="page-link" href="#">3</a></li>
+								<li className="page-item"><NavLink className="page-link" to="#">1</NavLink></li>
+								<li className="page-item"><NavLink className="page-link" to="#">2</NavLink></li>
+								<li className="page-item"><NavLink className="page-link" to="#">3</NavLink></li>
 								<li className="page-item">
-									<a className="page-link" href="#">Next</a>
+									<NavLink className="page-link" to="#">Next</NavLink>
 								</li>
 							</ul>
 						</nav>
