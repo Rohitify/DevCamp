@@ -1,6 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Register = () => {
+
+	const [ user, setUser ] = useState({
+		name: "",
+		email: "",
+		password: "",
+		password2: "",
+		role: ""
+	});
+
+	const { name, email, password, password2, role } = user;
+
+	const handleChange = (e) => {
+		setUser({ ...user, [e.target.name]: e.target.value });
+	}
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		console.log("Register submit");
+		console.log(user);
+	}
+
   return (
     <section className="form mt-5">
 			<div className="container">
@@ -13,19 +34,20 @@ const Register = () => {
 									Register to list your bootcamp or rate, review and favorite
 									bootcamps
 								</p>
-								<form> 
+								<form onSubmit={handleSubmit}> 
 									<div className="form-group">
-										<label for="name">Name</label>
+										<label htmlFor="name">Name</label>
 										<input
 											type="text"
 											name="name"
+											value={name}
 											className="form-control"
 											placeholder="Enter full name"
 											required
 										/>
 									</div>
 									<div className="form-group">
-										<label for="email">Email Address</label>
+										<label htmlFor="email">Email Address</label>
 										<input
 											type="email"
 											name="email"
@@ -35,7 +57,7 @@ const Register = () => {
 										/>
 									</div>
 									<div className="form-group">
-										<label for="password">Password</label>
+										<label htmlFor="password">Password</label>
 										<input
 											type="password"
 											name="password"
@@ -45,7 +67,7 @@ const Register = () => {
 										/>
 									</div>
 									<div className="form-group mb-4">
-										<label for="password2">Confirm Password</label>
+										<label htmlFor="password2">Confirm Password</label>
 										<input
 											type="password"
 											name="password2"

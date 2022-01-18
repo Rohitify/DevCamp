@@ -12,9 +12,12 @@ import ResetPassword from "./pages/auth/ResetPassword";
 import Bootcamps from "./pages/bootcamp/Bootcamps";
 // import './App.css';
 
+import { Provider } from 'react-redux';
+import store from './store';
+
 function App() {
   return (
-    <div className="App">
+    <Provider store={store}>
       <Router>
           <NavBar/>
         <Routes>
@@ -25,7 +28,7 @@ function App() {
           <Route path="/bootcamps" element={<Bootcamps />} />
         </Routes>
       </Router>
-    </div>
+    </Provider>
   );
 }
 

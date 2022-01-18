@@ -1,7 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom'
+import { login } from '../../actions/authAction';
 
 const Login = () => {
+
+	const [ user, setUser ] = useState({
+		email: "",
+		password: ""
+	});
+
+	const dispatch = useDispatch();
+
+	const { email, password } = user;
+
+	const handleChange = (e) => {
+		setUser({ ...user, [e.target.name] : e.target.value });
+	}
+
+	const handleSubmit = () => {
+		dispatch(login(user));
+	}
+
   return (
     <section className="form mt-5">
 			<div className="container">
@@ -14,22 +34,26 @@ const Login = () => {
 									Log in to list your bootcamp or rate, review and favorite
 									bootcamps
 								</p>
-								<form>
+								<form onSubmit={handleSubmit}>
 									<div className="form-group">
-										<label for="email">Email Address</label>
+										<label htmlFor="email">Email Address</label>
 										<input
 											type="email"
 											name="email"
+											value={email}
+											onChange={handleChange}
 											className="form-control"
 											placeholder="Enter email"
 											required
 										/>
 									</div>
 									<div className="form-group mb-4">
-										<label for="password">Password</label>
+										<label htmlFor="password">Password</label>
 										<input
 											type="password"
 											name="password"
+											value={password}
+											onChange={handleChange}
 											className="form-control"
 											placeholder="Enter password"
 											required
