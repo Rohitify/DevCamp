@@ -1,7 +1,7 @@
 import { LOGS_ERROR, SET_LOADING } from "../actions/types";
 
 const initialState = {
-  users : null,
+  users : [],
   current : null,
   // filtered : null,
   loading: false,

@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom'
 import { login } from '../../actions/authAction';
 
 const Login = () => {
@@ -9,16 +9,35 @@ const Login = () => {
 		email: "",
 		password: ""
 	});
+	
+	const { email, password } = user;
 
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	
+	// const storedData = useSelector(({ auth, bootcamps }) => ({auth, bootcamps}));
+	// const { auth, bootcamps } = storedData
+	// console.log("token", auth.token);
 
-	const { email, password } = user;
+	const storedData = useSelector( ({ auth }) => ({ auth }) );
+	const auth = storedData.auth;
+	
+
+	useEffect(() => {
+		if(auth?.isAuthenticated){
+			// props.history.push("/");
+			navigate("/");
+		}
+		// eslint-disable-next-line
+	}, [auth]);
+
 
 	const handleChange = (e) => {
 		setUser({ ...user, [e.target.name] : e.target.value });
 	}
 
-	const handleSubmit = () => {
+	const handleSubmit = (e) => {
+		e.preventDefault();
 		dispatch(login(user));
 	}
 

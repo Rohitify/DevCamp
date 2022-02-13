@@ -1,7 +1,7 @@
-import { LOGS_ERROR, SET_LOADING } from "../actions/types";
+import { ALL_COURSES, CREATE_COURSE, CURRENT_COURSE, DELETE_COURSE, LOGS_ERROR, SET_LOADING, UPDATE_COURSE } from "../actions/types";
 
 const initialState = {
-  courses : null,
+  courses : [],
   current : null,
   loading: false,
   error : null
@@ -9,6 +9,21 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch(action.type) {
+    case ALL_COURSES:
+      return {
+        ...state,
+        courses: action.payload.data,
+        loading: false
+      }
+    case CURRENT_COURSE:
+    case CREATE_COURSE:
+    case UPDATE_COURSE:
+    case DELETE_COURSE:
+      return {
+        ...state,
+        current: action.payload.data,
+        loading: false
+      }
     case SET_LOADING: 
       return {
         ...state,

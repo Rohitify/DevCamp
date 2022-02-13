@@ -1,4 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { register } from '../../actions/authAction';
 
 const Register = () => {
 
@@ -12,6 +15,18 @@ const Register = () => {
 
 	const { name, email, password, password2, role } = user;
 
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const storedData = useSelector( ({ auth }) => ({ auth }) );
+	const auth = storedData.auth;
+
+	useEffect(() => {
+		if(auth?.isAuthenticated){
+			navigate("/");
+		}
+		// eslint-disable-next-line
+	}, [auth]);
+
 	const handleChange = (e) => {
 		setUser({ ...user, [e.target.name]: e.target.value });
 	}
@@ -20,6 +35,7 @@ const Register = () => {
 		e.preventDefault();
 		console.log("Register submit");
 		console.log(user);
+		dispatch(register(user));
 	}
 
   return (
@@ -41,6 +57,7 @@ const Register = () => {
 											type="text"
 											name="name"
 											value={name}
+											onChange={handleChange}
 											className="form-control"
 											placeholder="Enter full name"
 											required
@@ -51,6 +68,8 @@ const Register = () => {
 										<input
 											type="email"
 											name="email"
+											value={email}
+											onChange={handleChange}
 											className="form-control"
 											placeholder="Enter email"
 											required
@@ -61,6 +80,8 @@ const Register = () => {
 										<input
 											type="password"
 											name="password"
+											value={password}
+											onChange={handleChange}
 											className="form-control"
 											placeholder="Enter password"
 											required
@@ -71,6 +92,8 @@ const Register = () => {
 										<input
 											type="password"
 											name="password2"
+											value={password2}
+											onChange={handleChange}
 											className="form-control"
 											placeholder="Confirm password"
 											required

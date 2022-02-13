@@ -14,6 +14,7 @@ import Bootcamps from "./pages/bootcamp/Bootcamps";
 
 import { Provider } from 'react-redux';
 import store from './store';
+import Bootcamp from "./pages/bootcamp/Bootcamp";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/resetpassword" element={<ResetPassword />} />
           <Route path="/register" element={<Register />} />
           <Route path="/bootcamps" element={<Bootcamps />} />
+          <Route path="/bootcamp/:bootcampId" element={<Bootcamp />} />
         </Routes>
       </Router>
     </Provider>
