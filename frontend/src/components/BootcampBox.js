@@ -1,30 +1,30 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { getBootcamp } from '../actions/bootcampAction';
+import img1 from "../resource/img/image_1.jpg"
 
-const BootcampBox = ({ bootcamp }) => {
-
-  const dispatch = useDispatch();
-
-  const handleClick = () => {
-    dispatch(getBootcamp(bootcamp._id));
-  }
+const BootcampBox = ({ bootcamp, editBootcamp=false }) => {
 
   return (
     <div key={bootcamp._id} className="card mb-3">
       <div className="row no-gutters">
         <div className="col-md-4">
-          <img src="" className="card-img" alt="..." />
+          <img src={img1} className="card-img" alt="..." />
         </div>
         <div className="col-md-8">
           <div className="card-body">
             <h5 className="card-title">
-              <NavLink to={`/bootcamp/${bootcamp._id}`} onClick={handleClick}>{bootcamp.name}
-                <span className="float-right badge badge-success">
-                  { bootcamp?.averageRating !== undefined ? bootcamp?.averageRating : 0 }
-                </span>
-              </NavLink>
+              <Link to={`/bootcamp/${bootcamp._id}`} >{bootcamp.name}
+              </Link>
+                { editBootcamp ? 
+                  <Link to={`/bootcamp/${bootcamp._id}/managebootcamp`} className="float-right btn btn-secondary"><i className="fas fa-pencil-alt" aria-hidden="true"></i></Link>
+                  :
+                  <span className="float-right badge badge-success">
+                    { bootcamp?.averageRating !== undefined ? bootcamp?.averageRating : 0 }
+                  </span>
+                }
+              
             </h5>
             <span className="badge badge-dark mb-2">
               { bootcamp?.location?.city !== "" ?  <span>{bootcamp?.location?.city}, </span> : null }
@@ -35,9 +35,9 @@ const BootcampBox = ({ bootcamp }) => {
             <p className="card-text">
               {bootcamp.careers.map((career, index) => {
                 if(bootcamp.careers.length !== index+1){
-                  return <span>{career}, </span>
+                  return <span key={index}>{career}, </span>
                 } else {
-                  return <span>{career}</span>
+                  return <span key={index}>{career}</span>
                 }
               })}
               {/* Web Development, UI/UX, Mobile Development */}

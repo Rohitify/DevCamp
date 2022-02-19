@@ -4,9 +4,7 @@ import { CLEAR_ERRORS, LOAD_USER, LOGIN_SUCCESS, LOGOUT, LOGS_ERROR, REGISTER_SU
 // Load User 
 export const loadUser = () => async (dispatch) => {
   try {
-    console.log("in");
     const res = await axios.get(`/api/v1/auth/me`);
-    console.log(res.data);
     dispatch({
       type: LOAD_USER,
       payload: res.data
@@ -24,14 +22,12 @@ export const loadUser = () => async (dispatch) => {
 export const login = (loginInfo) => async (dispatch) => {
   try {
     setLoding();
-    console.log(loginInfo);
     const config = {
       headers : {
         "Content-Type" : "application/json"
       }
     }
     const res = await axios.post(`/api/v1/auth/login`, loginInfo, config);
-    console.log(res.data);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data
@@ -52,7 +48,6 @@ export const login = (loginInfo) => async (dispatch) => {
 export const register = (registerInfo) => async(dispatch) => {
   try {
     setLoding();
-    console.log(registerInfo);
     const config = {
       headers : {
         "Content-Type" : "application/json"
@@ -60,7 +55,7 @@ export const register = (registerInfo) => async(dispatch) => {
     }
 
     const res = await axios.post(`/api/v1/auth/register`, registerInfo, config);
-    console.log(res.data);
+
     dispatch({
       type: REGISTER_SUCCESS,
       payload: res.data

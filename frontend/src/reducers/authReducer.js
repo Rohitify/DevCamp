@@ -1,7 +1,7 @@
 import { CLEAR_ERRORS, LOAD_USER, LOGIN_SUCCESS, LOGOUT, LOGS_ERROR, REGISTER_SUCCESS, SET_LOADING, UPDATE_DETAILS, UPDATE_PASSWORD } from "../actions/types";
 
 const initialState = {
-  token: localStorage.getItem("token") || null,
+  // token: localStorage.getItem("token") || null,
   isAuthenticated: false,
   user: null,
   loading: false,
@@ -20,18 +20,18 @@ export default (state = initialState, action) => {
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
     case UPDATE_PASSWORD:
-      localStorage.setItem("token", action.payload.token)
+      // localStorage.setItem("token", action.payload.token)
       return {
         ...state,
-        token: action.payload.token,
+        // token: action.payload.token,
         isAuthenticated: true,
         loading: false
       }
     case LOGOUT:
-      localStorage.removeItem("token");
+      // localStorage.removeItem("token");
       return {
         ...state,
-        token: null,
+        // token: null,
         isAuthenticated: false,
         user: null,
         loading: false,

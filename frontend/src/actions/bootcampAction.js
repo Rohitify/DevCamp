@@ -7,9 +7,9 @@ const config = {
   }
 }
 
-export const getBootcamps = () => async(dispatch) => {
+export const getBootcamps = (q = "/") => async(dispatch) => {
   try {
-    const res = await axios.get(`/api/v1/bootcamps`);
+    const res = await axios.get(`/api/v1/bootcamps${q}`);
 
     dispatch({
       type: ALL_BOOTCAMPS,
@@ -43,7 +43,7 @@ export const getBootcamp = (bootcampId) => async(dispatch) => {
 
     dispatch({
       type: CURRENT_BOOTCAMP,
-      payload: res.data
+      payload: res.data.data
     });
   } catch (err) {
     console.error(err);
@@ -91,4 +91,11 @@ export const setLoding = () => {
   return {
     type: SET_LOADING
   }
+}
+
+export const currentBootcampNull = dispatch => () => {
+  dispatch({
+    type: CURRENT_BOOTCAMP,
+    payload: null
+  });
 }

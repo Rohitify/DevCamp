@@ -1,6 +1,8 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const AddReview = () => {
+	const navigate = useNavigate();
   return (
     <div>
       <section class="container mt-5">
@@ -8,9 +10,9 @@ const AddReview = () => {
 				<div class="col-md-8 m-auto">
 					<div class="card bg-white py-2 px-4">
 						<div class="card-body">
-							<a href="bootcamp.html" class="btn btn-link text-secondary my-3"
-								><i class="fas fa-chevron-left"></i> Bootcamp Info</a
-							>
+							<button class="btn btn-link text-secondary my-3" onClick={() => navigate(-1)}>
+								<i class="fas fa-chevron-left"></i> Bootcamp Info
+							</button>
 							<h1 class="mb-2">DevWorks Bootcamp</h1>
 							<h3 class="text-primary mb-4">Write a Review</h3>
 							<p>

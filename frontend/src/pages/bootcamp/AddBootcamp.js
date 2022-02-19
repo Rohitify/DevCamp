@@ -1,13 +1,42 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 
-const AddBootcamp = () => {
+const AddBootcamp = ({ editBootcamp = false }) => {
+
+	const { bootcamp } = useSelector(({bootcamp}) => ({bootcamp}))
+	let currentBootcamp = bootcamp?.current;
+
+	const [ bootcampData, setBootcampData ] = useState({
+			name: currentBootcamp?.name || "",
+			address: "",
+			description: currentBootcamp?.description || "",
+			website: currentBootcamp?.website || "",
+			phone: currentBootcamp?.phone || "",
+			email: currentBootcamp?.email || "",
+			housing: currentBootcamp?.housing || false,
+			jobAssistance: currentBootcamp?.jobAssistance || false,
+			jobGuarantee: currentBootcamp?.jobGuarantee || false
+	});
+
+	const { name, address, description, website, phone, email, housing, jobAssistance, jobGuarantee } = bootcampData;
+
+	const handleChange = (e) => {
+		setBootcampData({ ...bootcampData, [e.target.name] : e.target.value });
+		// console.log(bootcampData);
+	}
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+	}
+
   return (
     <section className="container mt-5">
-			<h1 className="mb-2">Add Bootcamp</h1>
+			<h1 className="mb-2">{editBootcamp ? "Edit" : "Add"} Bootcamp</h1>
 			<p>
 				Important: You must be affiliated with a bootcamp to add to DevCamper
 			</p>
-			<form action="manage-bootcamp.html">
+			<form onSubmit={handleSubmit}>
 				<div className="row">
 					<div className="col-md-6">
 						<div className="card bg-white py-2 px-4">
@@ -21,6 +50,8 @@ const AddBootcamp = () => {
 									<input
 										type="text"
 										name="name"
+										value={name}
+										onChange={handleChange}
 										className="form-control"
 										placeholder="Bootcamp Name"
 										required
@@ -31,6 +62,8 @@ const AddBootcamp = () => {
 									<input
 										type="text"
 										name="address"
+										value={address}
+										onChange={handleChange}
 										className="form-control"
 										placeholder="Full Address"
 										required
@@ -44,6 +77,8 @@ const AddBootcamp = () => {
 									<input
 										type="text"
 										name="phone"
+										value={phone}
+										onChange={handleChange}
 										className="form-control"
 										placeholder="Phone"
 									/>
@@ -53,6 +88,8 @@ const AddBootcamp = () => {
 									<input
 										type="text"
 										name="email"
+										value={email}
+										onChange={handleChange}
 										className="form-control"
 										placeholder="Contact Email"
 									/>
@@ -62,6 +99,8 @@ const AddBootcamp = () => {
 									<input
 										type="text"
 										name="website"
+										value={website}
+										onChange={handleChange}
 										className="form-control"
 										placeholder="Website URL"
 									/>
@@ -79,8 +118,10 @@ const AddBootcamp = () => {
 										name="description"
 										rows="5"
 										className="form-control"
+										value={description}
+										onChange={handleChange}
 										placeholder="Description (What you offer, etc)"
-										maxlength="500"
+										maxLength="500"
 									></textarea>
 									<small className="form-text text-muted"
 										>No more than 500 characters</small
@@ -89,7 +130,7 @@ const AddBootcamp = () => {
 								<div className="form-group">
 									<label>Careers</label>
 									<select name="careers" className="custom-select" multiple>
-										<option selected>Select all that apply</option>
+										<option defaultChecked>Select all that apply</option>
 										<option value="Web Development">Web Development</option>
 										<option value="Mobile Development"
 											>Mobile Development</option
@@ -105,9 +146,11 @@ const AddBootcamp = () => {
 										className="form-check-input"
 										type="checkbox"
 										name="housing"
+										value={housing}
+										onChange={handleChange}
 										id="housing"
 									/>
-									<label className="form-check-label" for="housing">
+									<label className="form-check-label" htmlFor="housing">
 										Housing
 									</label>
 								</div>
@@ -116,9 +159,11 @@ const AddBootcamp = () => {
 										className="form-check-input"
 										type="checkbox"
 										name="jobAssistance"
+										value={jobAssistance}
+										onChange={handleChange}
 										id="jobAssistance"
 									/>
-									<label className="form-check-label" for="jobAssistance">
+									<label className="form-check-label" htmlFor="jobAssistance">
 										Job Assistance
 									</label>
 								</div>
@@ -127,23 +172,27 @@ const AddBootcamp = () => {
 										className="form-check-input"
 										type="checkbox"
 										name="jobGuarantee"
+										value={jobGuarantee}
+										onChange={handleChange}
 										id="jobGuarantee"
 									/>
-									<label className="form-check-label" for="jobGuarantee">
+									<label className="form-check-label" htmlFor="jobGuarantee">
 										Job Guarantee
 									</label>
 								</div>
-								<div className="form-check">
+								{/* <div className="form-check">
 									<input
 										className="form-check-input"
 										type="checkbox"
 										name="acceptGi"
+										value={acceptGi}
+										onChange={handleChange}
 										id="acceptGi"
 									/>
 									<label className="form-check-label" for="acceptGi">
 										Accepts GI Bill
 									</label>
-								</div>
+								</div> */}
 								<p className="text-muted my-4">
 									*After you add the bootcamp, you can add the specific courses
 									offered
@@ -158,9 +207,7 @@ const AddBootcamp = () => {
 						value="Submit Bootcamp"
 						className="btn btn-success btn-block my-4"
 					/>
-					<a href="manage-bootcamp.html" className="btn btn-danger btn-block mb-4"
-						>Cancel</a
-					>
+					<a href="manage-bootcamp.html" className="btn btn-danger btn-block mb-4">Cancel</a>
 				</div>
 			</form>
 		</section>

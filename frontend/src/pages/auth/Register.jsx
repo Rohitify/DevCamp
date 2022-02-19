@@ -10,7 +10,7 @@ const Register = () => {
 		email: "",
 		password: "",
 		password2: "",
-		role: ""
+		role: "user"
 	});
 
 	const { name, email, password, password2, role } = user;
@@ -22,19 +22,18 @@ const Register = () => {
 
 	useEffect(() => {
 		if(auth?.isAuthenticated){
-			navigate("/");
+			navigate("/", { replace : true });
 		}
 		// eslint-disable-next-line
 	}, [auth]);
 
 	const handleChange = (e) => {
 		setUser({ ...user, [e.target.name]: e.target.value });
+
 	}
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log("Register submit");
-		console.log(user);
 		dispatch(register(user));
 	}
 
@@ -108,6 +107,7 @@ const Register = () => {
 												type="radio"
 												name="role"
 												value="user"
+												onChange={handleChange}
 												checked
 											/>
 											<label className="form-check-label">
@@ -120,6 +120,7 @@ const Register = () => {
 												type="radio"
 												name="role"
 												value="publisher"
+												onChange={handleChange}
 											/>
 											<label className="form-check-label">
 												Bootcamp Publisher

@@ -1,21 +1,22 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { getBootcamp } from '../../actions/bootcampAction';
 import { getCourses } from '../../actions/courseAction';
 
 const Bootcamp = () => {
-
-	const storedData = useSelector(({ bootcamps, courses }) => ({ bootcamps, courses }));
-	const { bootcamps, courses } = storedData;
-	const { current } = bootcamps;
-	const allcourse = courses.courses;
 
 	const dispatch = useDispatch();
 	const { bootcampId } = useParams();
 	
 	useEffect(() => {
+		dispatch(getBootcamp(bootcampId));
 		dispatch(getCourses(bootcampId));
 	}, [bootcampId]);
+
+	const { bootcamp, course } = useSelector(({ bootcamp, course }) => ({ bootcamp, course }));
+	const { current } = bootcamp;
+	const allcourse = course.courses;
 
   return (
     <section className="bootcamp mt-5">
@@ -57,19 +58,19 @@ const Bootcamp = () => {
 						 <img src="" className="img-thumbnail" alt="" />
 						 {/* <!-- Rating --> */}
 						 <h1 className="text-center my-4"><span className="badge badge-secondary badge-success rounded-circle p-3">8.8</span> Rating</h1>
-						 {/* <!-- Buttons --> */}
-						 <a href="reviews.html" className="btn btn-dark btn-block my-3"><i className="fas fa-comments"></i>  Read Reviews</a>
-						 <a href="add-review.html" className="btn btn-light btn-block my-3"><i className="fas fa-pencil-alt"></i>  Write a Review</a>
-						 <a href="#" target="_blank" className="btn btn-secondary btn-block my-3"><i className="fas fa-globe"></i>  Visit Website</a>
+						 {/* <!-- Buttons --> */} 
+						 <Link to={`reviews`} className="btn btn-dark btn-block my-3"><i className="fas fa-comments"></i>  Read Reviews</Link>
+						 <Link to={`addreview`} className="btn btn-light btn-block my-3"><i className="fas fa-pencil-alt"></i>  Write a Review</Link>
+						 <Link to="#" target="_blank" className="btn btn-secondary btn-block my-3"><i className="fas fa-globe"></i>  Visit Website</Link>
 						 {/* <!-- Map --> */}
 						 <div id='map' style={{width: "100%", height: "300px"}}></div>
 						 {/* <!-- Perks --> */}
              <ul className="list-group list-group-flush" className="mt-4">
-                <li className={current?.housing === true ? "list-group-item bg-success" : "list-group-item bg-danger"}>
+                <li className="list-group-item">
 								 <i className="fas fa-check text-success"></i> Housing
 								</li>
-                <li className={current?.jobAssistance === true ? "list-group-item bg-success" : "list-group-item bg-danger"}><i className="fas fa-check text-danger"></i> Job Assistance</li>
-                <li className={current?.jobGuarantee === true ? "list-group-item bg-success" : "list-group-item bg-danger"}><i className="fas fa-times text-success"></i> Job Guarantee</li>
+                <li className="list-group-item"><i className="fas fa-check text-success"></i> Job Assistance</li>
+                <li className="list-group-item"><i className="fas fa-times text-danger"></i> Job Guarantee</li>
               </ul>
            </div>
          </div>

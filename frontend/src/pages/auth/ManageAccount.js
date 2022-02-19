@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const ManageAccount = () => {
   return (
@@ -40,11 +41,11 @@ const ManageAccount = () => {
 											/>
 										</div>
 										<div class="col-md-6">
-											<a
-												href="update-password.html"
-												class="btn btn-secondary btn-block"
-												>Update Password</a
-											>
+											<Link
+												to={`updatepassword`}
+												class="btn btn-secondary btn-block">
+													Update Password
+											</Link>
 										</div>
 									</div>
 								</div>

@@ -1,19 +1,23 @@
 import React from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
-const AddCourse = () => {
+const AddCourse = ({ editCourse = false }) => {
+	const navigate = useNavigate();
+
   return (
     <section className="container mt-5">
 			<div className="row">
 				<div className="col-md-8 m-auto">
 					<div className="card bg-white py-2 px-4">
 						<div className="card-body">
-							<a
-								href="manage-courses.html"
+							<button
 								className="btn btn-link text-secondary my-3"
-								><i className="fas fa-chevron-left"></i> Manage Courses</a
+								onClick={() => navigate(-1)}
 							>
+									<i className="fas fa-chevron-left"></i> Manage Courses
+							</button>
 							<h1 className="mb-2">DevWorks Bootcamp</h1>
-							<h3 className="text-primary mb-4">Add Course</h3>
+							<h3 className="text-primary mb-4">{ editCourse ? "Edit" : "Add" } Course</h3>
 							<form action="manage-bootcamp.html">
 								<div className="form-group">
 									<label>Course Title</label>

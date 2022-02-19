@@ -1,6 +1,9 @@
 import React from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 const ManageCourses = () => {
+	const navigate = useNavigate();
+
   return (
     <div>
       <section class="container mt-5">
@@ -8,11 +11,12 @@ const ManageCourses = () => {
 				<div class="col-md-8 m-auto">
 					<div class="card bg-white py-2 px-4">
 						<div class="card-body">
-							<a
-								href="manage-bootcamp.html"
+							<button
 								class="btn btn-link text-secondary my-3"
-								><i class="fas fa-chevron-left"></i> Manage Bootcamp</a
+								onClick={() => navigate(-1)}
 							>
+									<i class="fas fa-chevron-left"></i> Manage Bootcamp
+							</button>
 							<h1 class="mb-4">Manage Courses</h1>
 							<div class="card mb-3">
 								<div class="row no-gutters">
@@ -38,9 +42,9 @@ const ManageCourses = () => {
 								</div>
 							</div>
 
-							<a href="add-course.html" class="btn btn-primary btn-block mb-4"
-								>Add Bootcamp Course</a
-							>
+							<Link to={`addcourse`} class="btn btn-primary btn-block mb-4">
+								Add Bootcamp Course
+							</Link>
 							<table class="table table-striped">
 								<thead>
 									<tr>
@@ -52,9 +56,9 @@ const ManageCourses = () => {
 									<tr>
 										<td>Front End Web Development</td>
 										<td>
-											<a href="add-course.html" class="btn btn-secondary"
-												><i class="fas fa-pencil-alt"></i
-											></a>
+											<Link to={`editcourse`} class="btn btn-secondary"> 
+												<i class="fas fa-pencil-alt"></i>
+											</Link>
 											<button class="btn btn-danger">
 												<i class="fas fa-times"></i>
 											</button>

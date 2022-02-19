@@ -26,7 +26,7 @@ const Login = () => {
 	useEffect(() => {
 		if(auth?.isAuthenticated){
 			// props.history.push("/");
-			navigate("/");
+			navigate("/", { replace : true });
 		}
 		// eslint-disable-next-line
 	}, [auth]);

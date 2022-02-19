@@ -1,11 +1,63 @@
-import { useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { logout } from "../actions/authAction";
 
 const NavBar = () => {
+	const [showMenu, setShowMenu] = useState(false);
+	const [showSubMenu, setShowSubMenu] = useState(false);
 	const dispatch = useDispatch()
+
+	const navigate = useNavigate();
+  useEffect(() => {
+    dispatch(logout());
+    navigate("/");
+  }, [])
+
 	const handleLogout = () => {
 		dispatch(logout());
+	}
+
+	const { auth } = useSelector(({ auth }) => ({ auth }));
+
+	const authNav = () => {
+		return (<>
+			<li className="nav-item">
+				<NavLink className="nav-link" to="/login"
+					><i className="fas fa-sign-in-alt"></i> Login</NavLink>
+			</li>
+			<li className="nav-item">
+				<NavLink className="nav-link" to="/register"
+					><i className="fas fa-user-plus"></i> Register</NavLink>
+			</li>
+			</>)
+	}
+	
+	const accountNav = () => {
+		return(<>
+			<li className={ showSubMenu ? "nav-item dropdown show" : "nav-item dropdown" }>
+				<NavLink
+					className="nav-link dropdown-toggle"
+					to="#"
+					id="navbarDropdown"
+					role="button"
+					data-toggle="dropdown"
+					onClick={() => setShowSubMenu(!showSubMenu)}
+				>
+					<i className="fas fa-user"></i> Account
+				</NavLink>
+				<div className={ showSubMenu ? "dropdown-menu show" : "dropdown-menu" } role="menu" onClick={() => setShowSubMenu(!showSubMenu)} >
+					{ (auth?.user?.role === "admin" || auth?.user?.role === "publisher") && 
+					(<NavLink className="dropdown-item" to="/bootcamps/managebootcamplist">Manage Bootcamp</NavLink>)
+					}
+					<NavLink className="dropdown-item" to="/managereviews">Manage Reviews</NavLink>
+					<NavLink className="dropdown-item" to="/manageaccount">Manage Account</NavLink>
+					<div className="dropdown-divider"></div>
+					<a className="dropdown-item" href="/" onClick={handleLogout}>
+						<i className="fas fa-sign-out-alt"></i> Logout</a>
+				</div>
+			</li>
+			</>)
 	}
 
   return (
@@ -15,54 +67,21 @@ const NavBar = () => {
 					><i className="fas fa-laptop-code"></i> DevCamper</NavLink
 				> 
 				<button
-					className="navbar-toggler"
+					className={ showMenu ? "navbar-toggler collapsed" : "navbar-toggler" }
 					type="button"
 					data-toggle="collapse"
 					data-target="#navbarSupportedContent"
-				>
+					onClick={() => setShowMenu(!showMenu)}
+				> {/* navbar-toggler collapsed  */}
 					<span className="navbar-toggler-icon"></span>
 				</button>
 
-				<div className="collapse navbar-collapse" id="navbarSupportedContent">
+				<div className={ showMenu ? "collapse navbar-collapse show" : "collapse navbar-collapse" } id="navbarSupportedContent">{/* collapse navbar-collapse show  */} 
 					<ul className="navbar-nav ml-auto">
 						{/* Auth Links */}
-						<li className="nav-item">
-							<NavLink className="nav-link" to="/login"
-								><i className="fas fa-sign-in-alt"></i> Login</NavLink>
-						</li>
-						<li className="nav-item">
-							<NavLink className="nav-link" to="/register"
-								><i className="fas fa-user-plus"></i> Register</NavLink>
-						</li>
-						<li className="nav-item" onClick={handleLogout}>
-							<NavLink className="nav-link" to="/login"
-								><i className="fas fa-sign-out-alt"></i> Logout</NavLink>
-						</li>
-						{/* Account link  */}
-						<li className="nav-item dropdown">
-							<NavLink
-								className="nav-link dropdown-toggle"
-								to="#"
-								id="navbarDropdown"
-								role="button"
-								data-toggle="dropdown"
-							>
-								<i className="fas fa-user"></i> Account
-							</NavLink>
-							<div className="dropdown-menu" role="menu">
-								<NavLink className="dropdown-item" to="manage-bootcamp.html"
-									>Manage Bootcamp</NavLink>
-								<NavLink className="dropdown-item" to="manage-reviews.html"
-									>Manage Reviews</NavLink>
-								<NavLink className="dropdown-item" to="manage-account.html"
-									>Manage Account</NavLink>
-								<div className="dropdown-divider"></div>
-								<NavLink className="dropdown-item" to="login.html"
-									><i className="fas fa-sign-out-alt"></i> Logout</NavLink>
-							</div>
-						</li>
+						{ auth?.isAuthenticated ? accountNav() : authNav()  }
 						{/* General link  */}
-						<li className="nav-item d-none d-sm-block">
+						<li className="nav-item d-none d-md-block">
 							<NavLink className="nav-link" to="#">|</NavLink>
 						</li>
 						<li className="nav-item">

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const ManageReviews = () => {
   return (
@@ -22,9 +23,9 @@ const ManageReviews = () => {
 										<td>DevWorks Bootcamp</td>
 										<td>10</td>
 										<td>
-											<a href="add-review.html" class="btn btn-secondary"
-												><i class="fas fa-pencil-alt"></i
-											></a>
+											<Link to={`editreview`} class="btn btn-secondary"
+												><i class="fas fa-pencil-alt"></i>
+											</Link>
 											<button class="btn btn-danger">
 												<i class="fas fa-times"></i>
 											</button>

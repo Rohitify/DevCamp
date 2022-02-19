@@ -7,8 +7,8 @@ import userReducer from './userReducer';
 
 export default combineReducers({
   auth: authReducer,
-  bootcamps: bootcampReducer,
-  courses: courseReducer,
-  reviews: reviewReducer,
-  users: userReducer
+  bootcamp: bootcampReducer,
+  course: courseReducer,
+  review: reviewReducer,
+  user: userReducer
 });

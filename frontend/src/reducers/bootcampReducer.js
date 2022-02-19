@@ -14,14 +14,16 @@ export default (state = initialState, action) => {
       return {
         ...state,
         bootcamps: action.payload.data,
-        loading: false
+        current : null,
+        loading: false,
+        error : null
       }
     case CREATE_BOOTCAMP:
     case DELETE_BOOTCAMP:
     case CURRENT_BOOTCAMP: {
       return {
         ...state,
-        current: action.payload.data,
+        current: action.payload,
         loading: false
       }
     }

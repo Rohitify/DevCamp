@@ -15,12 +15,10 @@ const Bootcamps = () => {
 	});
 
 	const { miles, pincode } = searchParams;
-	console.log({ state });
+
 	const dispatch = useDispatch();
 
-	const storedData = useSelector(({ bootcamps }) => (bootcamps));
-
-	const { bootcamps } = storedData;
+	const { bootcamps } = useSelector(({ bootcamp }) => (bootcamp));
 
 	useEffect(() => {
 		if(state === null){
@@ -36,7 +34,6 @@ const Bootcamps = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log({ miles, pincode});
 		dispatch(getBootcampsInRadius(pincode, miles));
 	}
 
