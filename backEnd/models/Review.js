@@ -68,4 +68,4 @@ ReviewSchema.pre("remove", function() {
   this.constructor.getAverageRating(this.bootcamp);
 });
 
-module.exports = mongoose.model("review", ReviewSchema);
+module.exports = mongoose.model("Review", ReviewSchema);

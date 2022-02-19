@@ -127,15 +127,8 @@ BootcampSchema.pre("save", async function(next){
   };
 
   // Do not save address in DB
-  // this.address = undefined;
+  this.address = undefined;
   next();
-});
-
-BootcampSchema.virtual("course", {
-  ref: "Course",
-  localField: "_id",
-  foreignField: "bootcamp",
-  justOne: false
 });
 
 // Cascade delete course of the bootcamp on delete 
@@ -145,4 +138,12 @@ BootcampSchema.pre("remove", async function(next){
   next();
 });
 
-module.exports = mongoose.model("bootcamp", BootcampSchema);
+// Reverse populate with virtuals 
+BootcampSchema.virtual('courses', {
+  ref: 'Course',
+  localField: '_id',
+  foreignField: 'bootcamp',
+  justOne: false
+});
+
+module.exports = mongoose.model("Bootcamp", BootcampSchema);

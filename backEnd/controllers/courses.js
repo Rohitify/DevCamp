@@ -33,6 +33,7 @@ exports.getCourse = asyncHandler( async (req, res, next) => {
 } );
 
 exports.addCourse = asyncHandler( async (req, res, next) => {
+  console.log(req.params.bootcampId, req.user.id)
   req.body.bootcamp = req.params.bootcampId;
   req.body.user = req.user.id;
 

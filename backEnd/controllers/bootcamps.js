@@ -1,11 +1,11 @@
 const path = require("path");
-const Bootcamp = require("../models/Bootcamp");
-const asyncHandler = require("../middleware/async");
 const ErrorResponse = require("../utils/errorResponse");
+const asyncHandler = require("../middleware/async");
 const geocoder = require("../utils/geocoder");
+const Bootcamp = require("../models/Bootcamp");
 
 exports.getBootcamps = asyncHandler(async (req, res, next) => {
-    res.status(200).json(res.advancedResults);
+  res.status(200).json(res.advancedResults);
 });
 
 exports.getBootcamp = asyncHandler(async (req, res, next) => {
@@ -16,7 +16,6 @@ exports.getBootcamp = asyncHandler(async (req, res, next) => {
         new ErrorResponse(`Bootcamp not found with id of ${req.params.id}`, 404)
       );
     }
-
     res.status(200).json({
       success: true,
       data: bootcamp
@@ -40,7 +39,7 @@ exports.createBootcamp = asyncHandler(async (req, res, next) => {
       success: true,
       data: bootcamp
     });
-});
+}); 
 
 exports.updateBootcamp = asyncHandler(async (req, res, next) => {
     
@@ -53,7 +52,7 @@ exports.updateBootcamp = asyncHandler(async (req, res, next) => {
     }
 
     // Check the owner of Bootcamp or admin 
-    if(bootcamp.user.toString() !== req.user.id && req.user.role !== "admin"){
+    if(bootcamp?.user.toString() !== req.user.id && req.user.role !== "admin"){
       return next(new ErrorResponse(`User of Id ${req.user.id} is not authorized to update the bootcamp`, 401));
     }
 
@@ -94,13 +93,13 @@ exports.getBootcampsInRadius = asyncHandler( async (req, res, next) => {
 
   const loc = await geocoder.geocode(pincode);
   const lat = loc[0].latitude;
-  const lon = loc[0].longitude;
+  const lng = loc[0].longitude;
 
   // calculating Radius 3963 mi or 6378 km
-  const radius = distance / 6378;
+  const radius = distance / 3963;
 
   const bootcamps = await Bootcamp.find({
-    location: { $geoWithin: { $centerSphere: [ [ lat, lon ], radius ] } }
+    location: { $geoWithin: { $centerSphere: [ [ lng, lat ], radius ] } }
   });
 
   res.status(200).json({

@@ -15,7 +15,7 @@ const CourseSchema = new mongoose.Schema({
     required: [true, "Please provide number of weeks"]
   },
   tuition: {
-    type: String,
+    type: Number,
     required: [true, "Please provide Tuition cost"]
   },
   minimumSkill: {
@@ -75,4 +75,4 @@ CourseSchema.pre("remove", function() {
   this.constructor.getAverageCost(this.bootcamp);
 });
 
-module.exports = mongoose.model("course", CourseSchema);
+module.exports = mongoose.model("Course", CourseSchema);

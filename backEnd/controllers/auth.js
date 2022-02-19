@@ -1,11 +1,17 @@
 const crypto = require("crypto");
 const asyncHandler = require("../middleware/async");
 const User = require("../models/User");
-const ErrorResponse = require("../middleware/error");
+const ErrorResponse = require("../utils/errorResponse");
 const sendEmail = require("../utils/sendEmail");
 
 exports.register = asyncHandler(async (req, res, next) => {
   const { name, email, password, role } = req.body;
+
+  const userExits = await User.findOne({ email: email });
+
+  if(userExits){
+    return next(new ErrorResponse(`User with the email ${req.body.email} already exits`, 400));
+  }
 
   // Create User 
   const user = await User.create({
@@ -22,7 +28,7 @@ exports.login = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
 
   // Validate email and password
-  if(!email && !password){
+  if(!email || !password){
     return next( new ErrorResponse(`Please provide Email and Password both`, 400) );
   }
 
@@ -46,7 +52,7 @@ exports.login = asyncHandler(async (req, res, next) => {
 
 exports.logout = asyncHandler(async (req, res, next) =>{
   res.cookie("token", "none", {
-    expires: new Date(Date.now() + 10 * 1000),
+    expires: new Date(Date.now() + 1 * 1000),
     httpOnly: true
   });
 
@@ -69,7 +75,7 @@ exports.forgetPassword = asyncHandler(async (req, res, next) =>{
   const user = await User.findOne({ email: req.body.email });
 
   if(!user){
-    return next(new ErrorResponse(`There is no user with the email ${req.body.email}, 404`));
+    return next(new ErrorResponse(`There is no user with the email ${req.body.email}`, 404));
   }
 
   // get reset token 
