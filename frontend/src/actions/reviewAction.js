@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ALL_REVIEWS, CREATE_REVIEW, CURRENT_REVIEW, DELETE_REVIEW, LOGS_ERROR, SET_LOADING, UPDATE_REVIEW } from "./types";
+import { ALL_REVIEWS, CREATE_REVIEW, CURRENT_REVIEW, DELETE_REVIEW, LOGS_ERROR, SET_LOADING, SET_REVIEW_LOADING, UPDATE_REVIEW } from "./types";
 
 const config = {
   headers : {
@@ -7,9 +7,15 @@ const config = {
   }
 }
 
-export const getReviews = (bootcampId) => async (dispatch) => {
+export const getReviews = (bootcampId = null, userId = null) => async (dispatch) => {
   try {
-    const res = await axios.get(`/api/v1/bootcamps/${bootcampId}/reviews`);
+    dispatch(setLoading());
+    let res;
+    if(userId === null && bootcampId !== null){
+      res = await axios.get(`/api/v1/bootcamps/${bootcampId}/reviews`);
+    } else{
+      res = await axios.get(`/api/v1/reviews?user=${userId}`);
+    }
 
     dispatch({
       type: ALL_REVIEWS,
@@ -20,9 +26,10 @@ export const getReviews = (bootcampId) => async (dispatch) => {
   }
 }
 
-export const getReview = (bootcampId, reviewId) => async (dispatch) => {
+export const getReview = (reviewId) => async (dispatch) => {
   try {
-    const res = await axios.get(`/api/v1/bootcamps/${bootcampId}/reviews/${reviewId}`);
+    setLoading();
+    const res = await axios.get(`/api/v1/reviews/${reviewId}`);
 
     dispatch({
       type: CURRENT_REVIEW,
@@ -46,9 +53,10 @@ export const createReview = (bootcampId, reviewDetails) => async (dispatch) => {
   }
 }
 
-export const updateReview = (bootcampId, reviewId, reviewDetails) => async (dispatch) => {
+export const updateReview = (reviewId, reviewDetails) => async (dispatch) => {
   try {
-    const res = await axios.put(`/api/v1/bootcamps/${bootcampId}/reviews/${reviewId}`, reviewDetails, config);
+    setLoading();
+    const res = await axios.put(`/api/v1/reviews/${reviewId}`, reviewDetails, config);
 
     dispatch({
       type: UPDATE_REVIEW,
@@ -72,8 +80,8 @@ export const deleteReview = (bootcampId, reviewId) => async (dispatch) => {
   }
 }
 
-export const setLoding = () => {
-  return {
-    type: SET_LOADING
-  }
+export const setLoading = () => {
+  return ({
+    type: SET_REVIEW_LOADING
+  })
 }

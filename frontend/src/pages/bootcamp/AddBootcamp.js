@@ -1,34 +1,61 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import { createBootcamp, updateBootcamp } from '../../actions/bootcampAction';
 
 const AddBootcamp = ({ editBootcamp = false }) => {
-
+	const dispatch = useDispatch();
 	const { bootcamp } = useSelector(({bootcamp}) => ({bootcamp}))
 	let currentBootcamp = bootcamp?.current;
 
 	const [ bootcampData, setBootcampData ] = useState({
 			name: currentBootcamp?.name || "",
-			address: "",
+			address: currentBootcamp?.address || "",
 			description: currentBootcamp?.description || "",
 			website: currentBootcamp?.website || "",
 			phone: currentBootcamp?.phone || "",
 			email: currentBootcamp?.email || "",
 			housing: currentBootcamp?.housing || false,
 			jobAssistance: currentBootcamp?.jobAssistance || false,
-			jobGuarantee: currentBootcamp?.jobGuarantee || false
+			jobGuarantee: currentBootcamp?.jobGuarantee || false,
+			careers : currentBootcamp?.careers || []
 	});
 
-	const { name, address, description, website, phone, email, housing, jobAssistance, jobGuarantee } = bootcampData;
+	const { name, address, description, website, phone, email, housing, jobAssistance, jobGuarantee, careers } = bootcampData;
 
 	const handleChange = (e) => {
-		setBootcampData({ ...bootcampData, [e.target.name] : e.target.value });
-		// console.log(bootcampData);
+		const value = e.target.type === "checkbox" ? e.target.checked : e.target.value
+		setBootcampData({ ...bootcampData, [e.target.name] : value });
+	}
+
+	if(careers.includes('')){
+		let careersData = careers.filter(career => career !== "");
+		setBootcampData({ ...bootcampData, careers : careersData });
+	}
+
+	const handleSelect = (e) => {
+		let careersValue;
+		const isIncluded = careers.includes(e.target.value);
+		if(isIncluded){
+			careersValue = careers.filter(career => career !== e.target.value)
+		}
+		else{
+			careersValue = [ ... careers, e.target.value];
+		}
+		setBootcampData({ ...bootcampData, [e.target.name] : careersValue });
 	}
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		console.log(bootcampData);
+		if(editBootcamp === true){
+			dispatch(updateBootcamp(currentBootcamp._id, bootcampData));
+		} else {
+			dispatch(createBootcamp(bootcampData));
+		}
 	}
+
+	
 
   return (
     <section className="container mt-5">
@@ -129,10 +156,10 @@ const AddBootcamp = ({ editBootcamp = false }) => {
 								</div>
 								<div className="form-group">
 									<label>Careers</label>
-									<select name="careers" className="custom-select" multiple>
-										<option defaultChecked>Select all that apply</option>
+									<select name="careers" value={careers} onChange={handleSelect} className="custom-select" multiple>
+										{/* <option defaultChecked>Select all that apply</option> */}
 										<option value="Web Development">Web Development</option>
-										<option value="Mobile Development"
+										<option value="Mobile Development" 
 											>Mobile Development</option
 										>
 										<option value="UI/UX">UI/UX</option>
@@ -146,8 +173,8 @@ const AddBootcamp = ({ editBootcamp = false }) => {
 										className="form-check-input"
 										type="checkbox"
 										name="housing"
-										value={housing}
 										onChange={handleChange}
+										checked={housing}
 										id="housing"
 									/>
 									<label className="form-check-label" htmlFor="housing">
@@ -159,8 +186,8 @@ const AddBootcamp = ({ editBootcamp = false }) => {
 										className="form-check-input"
 										type="checkbox"
 										name="jobAssistance"
-										value={jobAssistance}
 										onChange={handleChange}
+										checked={jobAssistance}
 										id="jobAssistance"
 									/>
 									<label className="form-check-label" htmlFor="jobAssistance">
@@ -172,8 +199,8 @@ const AddBootcamp = ({ editBootcamp = false }) => {
 										className="form-check-input"
 										type="checkbox"
 										name="jobGuarantee"
-										value={jobGuarantee}
 										onChange={handleChange}
+										checked={jobGuarantee}
 										id="jobGuarantee"
 									/>
 									<label className="form-check-label" htmlFor="jobGuarantee">

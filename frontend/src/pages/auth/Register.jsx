@@ -83,6 +83,7 @@ const Register = () => {
 											onChange={handleChange}
 											className="form-control"
 											placeholder="Enter password"
+											minLength={6}
 											required
 										/>
 									</div>
@@ -95,6 +96,7 @@ const Register = () => {
 											onChange={handleChange}
 											className="form-control"
 											placeholder="Confirm password"
+											minLength={6}
 											required
 										/>
 									</div>

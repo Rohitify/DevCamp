@@ -65,7 +65,7 @@ export const deleteCourse = (bootcampId, courseId) => async (dispatch) => {
 
     dispatch({
       type: DELETE_COURSE,
-      payload: res.data
+      payload: courseId
     })
   } catch (err) {
     console.error(err);

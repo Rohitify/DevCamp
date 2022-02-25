@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useParams } from 'react-router-dom'
-import { getBootcamp } from '../../actions/bootcampAction'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import { deleteBootcamp, getBootcamp } from '../../actions/bootcampAction'
 import BootcampBox from '../../components/BootcampBox'
 
 const ManageBootcamp = () => {
 
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const { bootcampId } = useParams();
 	
 	useEffect(() => {
@@ -16,6 +17,11 @@ const ManageBootcamp = () => {
 
 	const { bootcamp } = useSelector(({ bootcamp }) => ({ bootcamp }));
 	const { current } = bootcamp;
+
+	const handleDelete = () => {
+		dispatch(deleteBootcamp(bootcampId));
+		navigate(-1, { replace: true });
+	}
 
   return (
     <section className="container mt-5">
@@ -41,7 +47,7 @@ const ManageBootcamp = () => {
 							<Link to={`managecourses`} className="btn btn-secondary btn-block" >
 								Manage Courses
 							</Link>
-							<Link to="#" className="btn btn-danger btn-block">Remove Bootcamp</Link>
+							<button onClick={handleDelete} className="btn btn-danger btn-block">Remove Bootcamp</button>
 							<p className="text-muted mt-5">
 								* You can only add one bootcamp per account.
 							</p>

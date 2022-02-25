@@ -1,4 +1,4 @@
-import { ALL_BOOTCAMPS, CREATE_BOOTCAMP, CURRENT_BOOTCAMP, DELETE_BOOTCAMP, LOGS_ERROR, SET_LOADING } from "../actions/types";
+import { ALL_BOOTCAMPS, CREATE_BOOTCAMP, CURRENT_BOOTCAMP, DELETE_BOOTCAMP, LOGS_ERROR, SET_LOADING, UPDATE_BOOTCAMP } from "../actions/types";
 
 const initialState = {
   bootcamps : [],
@@ -19,14 +19,31 @@ export default (state = initialState, action) => {
         error : null
       }
     case CREATE_BOOTCAMP:
-    case DELETE_BOOTCAMP:
-    case CURRENT_BOOTCAMP: {
       return {
         ...state,
-        current: action.payload,
+        current: action.payload.data,
+        bootcamps: [ action.payload.data, ...state.bootcamps ],
         loading: false
       }
-    }
+    case UPDATE_BOOTCAMP:
+      return {
+        ...state,
+        current: action.payload.data,
+        bootcamps: state.bootcamps.map(bootcamp => 
+          bootcamp._id === action.payload.data._id ? action.payload.data : bootcamp
+        )
+      }
+    case CURRENT_BOOTCAMP:
+      return {
+        ...state,
+        current: action.payload.data,
+        loading: false
+      }
+    case DELETE_BOOTCAMP:
+      return {
+        ...state,
+        bootcamps: state.bootcamps.filter(bootcamp => bootcamp._id !== state.current._id)
+      }
     case SET_LOADING: 
       return {
         ...state,

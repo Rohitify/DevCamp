@@ -1,4 +1,4 @@
-import { ALL_REVIEWS, CREATE_REVIEW, CURRENT_REVIEW, DELETE_REVIEW, LOGS_ERROR, SET_LOADING, UPDATE_REVIEW } from "../actions/types";
+import { ALL_REVIEWS, CREATE_REVIEW, CURRENT_REVIEW, DELETE_REVIEW, LOGS_ERROR, SET_LOADING, SET_REVIEW_LOADING, UPDATE_REVIEW } from "../actions/types";
 
 const initialState = {
   reviews : [],
@@ -10,9 +10,11 @@ const initialState = {
 export default (state = initialState, action) => {
   switch(action.type) {
     case ALL_REVIEWS:
+      console.log("first")
       return {
         ...state,
         reviews: action.payload.data,
+        current: null,
         loading: false
       }
     case CURRENT_REVIEW:
@@ -24,7 +26,7 @@ export default (state = initialState, action) => {
         current: action.payload.data,
         loading: false
       }
-    case SET_LOADING: 
+    case SET_REVIEW_LOADING:
       return {
         ...state,
         loading: true

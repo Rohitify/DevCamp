@@ -1,80 +1,87 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
+import { deleteCourse, getCourses } from '../../actions/courseAction';
+import BootcampBox from '../../components/BootcampBox';
+import ManageNoneCourses from './ManageNoneCourses';
+
+const CourseRow = ({ course, handleDelete }) => {
+	return(
+		<tr>
+			<td>{course.title}</td>
+			<td>
+				<Link to={`editcourse/${course._id}`} className="btn btn-secondary"> 
+					<i className="fas fa-pencil-alt"></i>
+				</Link>
+				<button className="btn btn-danger" onClick={() => handleDelete(course._id)}>
+					<i className="fas fa-times"></i>
+				</button>
+			</td>
+		</tr>
+	)
+}
+
+const NoCourses = () => {
+	return(
+		<tr>
+			<td colSpan={2}>
+				<div className="card-body">
+					<p className="lead text-center">
+						You have not yet added any courses
+					</p>
+				</div>
+			</td>
+		</tr>
+	)
+}
 
 const ManageCourses = () => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
+	const { bootcamp, course } = useSelector((state) => (state));
+	const { current } = bootcamp;
+	const { courses } = course;
+
+	useEffect(() => {
+		dispatch(getCourses(current._id))
+	}, [current]);
+
+	const handleDelete = (courseId) => {
+		dispatch(deleteCourse(current._id, courseId));
+	}
 
   return (
     <div>
-      <section class="container mt-5">
-			<div class="row">
-				<div class="col-md-8 m-auto">
-					<div class="card bg-white py-2 px-4">
-						<div class="card-body">
+      <section className="container mt-5">
+			<div className="row">
+				<div className="col-md-8 m-auto">
+					<div className="card bg-white py-2 px-4">
+						<div className="card-body">
 							<button
-								class="btn btn-link text-secondary my-3"
+								className="btn btn-link text-secondary my-3"
 								onClick={() => navigate(-1)}
 							>
-									<i class="fas fa-chevron-left"></i> Manage Bootcamp
+									<i className="fas fa-chevron-left"></i> Manage Bootcamp
 							</button>
-							<h1 class="mb-4">Manage Courses</h1>
-							<div class="card mb-3">
-								<div class="row no-gutters">
-									<div class="col-md-4">
-										<img src="img/image_1.jpg" class="card-img" alt="..." />
-									</div>
-									<div class="col-md-8">
-										<div class="card-body">
-											<h5 class="card-title">
-												<a href="bootcamp.html"
-													>Devworks Bootcamp
-													<span class="float-right badge badge-success"
-														>4.9</span
-													></a
-												>
-											</h5>
-											<span class="badge badge-dark mb-2">Boston, MA</span>
-											<p class="card-text">
-												Web Development, UI/UX, Mobile Development
-											</p>
-										</div>
-									</div>
-								</div>
-							</div>
+							<h1 className="mb-4">Manage Courses</h1>
+							{ current && <BootcampBox bootcamp={current} /> }
 
-							<Link to={`addcourse`} class="btn btn-primary btn-block mb-4">
+							<Link to={`addcourse`} className="btn btn-primary btn-block mb-4">
 								Add Bootcamp Course
 							</Link>
-							<table class="table table-striped">
+							<table className="table table-striped">
 								<thead>
 									<tr>
 										<th scope="col">Title</th>
-										<th scope="col"></th>
+										<th scope="col">Action</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>Front End Web Development</td>
-										<td>
-											<Link to={`editcourse`} class="btn btn-secondary"> 
-												<i class="fas fa-pencil-alt"></i>
-											</Link>
-											<button class="btn btn-danger">
-												<i class="fas fa-times"></i>
-											</button>
-										</td>
-									</tr>
-									<tr>
-										<td>Full Stack Web Development</td>
-										<td>
-											<a href="add-course.html" class="btn btn-secondary"
-												><i class="fas fa-pencil-alt"></i
-											></a>
-											<button class="btn btn-danger">
-												<i class="fas fa-times"></i>
-											</button>
-										</td>
-									</tr>
+									{ courses.length ? 
+										courses.map((course) => <CourseRow key={course._id} course={course} handleDelete={handleDelete} />)
+									: <NoCourses /> }
+									
 								</tbody>
 							</table>
 						</div>

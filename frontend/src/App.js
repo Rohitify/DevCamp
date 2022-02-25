@@ -44,13 +44,13 @@ function App() {
           <Route path="/bootcamps/managebootcamplist" element={<RequireAuth><ManageBootcampList /></RequireAuth>} />
           <Route path="/bootcamp/:bootcampId/managebootcamp" element={<RequireAuth><ManageBootcamp /></RequireAuth>} />
           <Route path="/bootcamp/:bootcampId/managebootcamp/managecourses" element={<RequireAuth><ManageCourses /></RequireAuth>} />
-          <Route path="/bootcamp/:bootcampId/managebootcamp/managecourses/editcourse" element={<RequireAuth><AddCourse editCourse={true} /></RequireAuth>} />
+          <Route path="/bootcamp/:bootcampId/managebootcamp/managecourses/editcourse/:courseId" element={<RequireAuth><AddCourse editCourse={true} /></RequireAuth>} />
           <Route path="/bootcamp/:bootcampId/managebootcamp/managecourses/addcourse" element={<RequireAuth><AddCourse /></RequireAuth>} />
           <Route path="/bootcamp/addbootcamp" element={<RequireAuth><AddBootcamp /></RequireAuth>} />
           <Route path="/bootcamp/:bootcampId/managebootcamp/editbootcamp" element={<RequireAuth><AddBootcamp editBootcamp={true} /></RequireAuth>} />
           <Route path="/managereviews" element={<RequireAuth roles={allUser}><ManageReviews /></RequireAuth>} />
           <Route path="/bootcamp/:bootcampId/addreview" element={<RequireAuth roles={allUser}><AddReview /></RequireAuth>} />
-          <Route path="/managereviews/editreview" element={<RequireAuth roles={allUser}><AddReview editReview={true} /></RequireAuth>} />
+          <Route path="/managereviews/editreview/:reviewId" element={<RequireAuth roles={allUser}><AddReview editReview={true} /></RequireAuth>} />
         </Routes>
     </Provider>
   );

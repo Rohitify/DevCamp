@@ -33,7 +33,7 @@ export const login = (loginInfo) => async (dispatch) => {
       payload: res.data
     });
     
-    dispatch(loadUser());
+    if(res?.data?.success === true) dispatch(loadUser());
     
   } catch (err) {
     console.log("err", err.response.data.error);
@@ -61,7 +61,7 @@ export const register = (registerInfo) => async(dispatch) => {
       payload: res.data
     });
 
-    if(res?.data?.success === true) loadUser();
+    if(res?.data?.success === true) dispatch(loadUser());
   } catch (err) {
     console.log(err);
     dispatch({

@@ -37,6 +37,7 @@ export const UPDATE_REVIEW = "UPDATE_REVIEW";
 export const DELETE_REVIEW = "DELETE_REVIEW";
 export const CLEAR_REVIEWS = "CLEAR_REVIEWS";
 export const CLEAR_REVIEW = "CLEAR_REVIEW";
+export const SET_REVIEW_LOADING = "SET_REVIEW_LOADING";
 
 // Alert 
 export const SET_ALERT = 'SET_ALERT';

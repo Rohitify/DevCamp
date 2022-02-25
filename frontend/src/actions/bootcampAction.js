@@ -43,7 +43,7 @@ export const getBootcamp = (bootcampId) => async(dispatch) => {
 
     dispatch({
       type: CURRENT_BOOTCAMP,
-      payload: res.data.data
+      payload: res.data
     });
   } catch (err) {
     console.error(err);
@@ -77,7 +77,7 @@ export const updateBootcamp = (bootcampId, bootcampDetails) => async (dispatch) 
 export const deleteBootcamp = (bootcampId) => async (dispatch) => {
   try {
     const res = await axios.delete(`/api/v1/bootcamps/${bootcampId}`);
-    console.log(res.data);
+
     dispatch({
       type: DELETE_BOOTCAMP,
       payload: res.data
@@ -93,7 +93,7 @@ export const setLoding = () => {
   }
 }
 
-export const currentBootcampNull = dispatch => () => {
+export const currentBootcampNull = (dispatch) => {
   dispatch({
     type: CURRENT_BOOTCAMP,
     payload: null

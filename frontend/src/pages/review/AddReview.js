@@ -1,59 +1,103 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom'
+import { createReview, getReview, updateReview } from '../../actions/reviewAction';
 
-const AddReview = () => {
+const AddReview = ({ editReview = false }) => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const { reviewId } = useParams();
+
+	const { bootcamp, review } = useSelector((state) => state);
+	const bootcampId = bootcamp.current?._id;
+	const current = review.current;
+
+	const [ reviewDetails, setReviewDetails ] = useState({
+		title: "",
+		text: "",
+		rating: 8
+	});
+	const { title, text, rating } = reviewDetails;
+
+	useEffect(() => {
+		if(current) {
+			const { title, text, rating } = current
+			setReviewDetails({ title, text, rating });
+		} else{
+			reviewId && dispatch(getReview(reviewId));
+		}
+	}, [current, reviewId]);
+	
+	const handleChange = (e) => {
+		setReviewDetails({ ...reviewDetails, [e.target.name] : e.target.value });
+	}
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		editReview ? dispatch(updateReview(reviewId, reviewDetails)) : dispatch(createReview(bootcampId, reviewDetails))
+	}
+
+	if(review.loading){
+		console.log("hello")
+		return(<div>loading</div>)
+	}
+
   return (
     <div>
-      <section class="container mt-5">
-			<div class="row">
-				<div class="col-md-8 m-auto">
-					<div class="card bg-white py-2 px-4">
-						<div class="card-body">
-							<button class="btn btn-link text-secondary my-3" onClick={() => navigate(-1)}>
-								<i class="fas fa-chevron-left"></i> Bootcamp Info
+      <section className="container mt-5">
+			<div className="row">
+				<div className="col-md-8 m-auto">
+					<div className="card bg-white py-2 px-4">
+						<div className="card-body">
+							<button className="btn btn-link text-secondary my-3" onClick={() => navigate(-1)}>
+								<i className="fas fa-chevron-left"></i> Bootcamp Info
 							</button>
-							<h1 class="mb-2">DevWorks Bootcamp</h1>
-							<h3 class="text-primary mb-4">Write a Review</h3>
+							<h1 className="mb-2">DevWorks Bootcamp</h1>
+							<h3 className="text-primary mb-4">Write a Review</h3>
 							<p>
 								You must have attended and graduated this bootcamp to review
 							</p>
-							<form action="reviews.html">
-								<div class="form-group">
-									<label for="rating"
-										>Rating: <span class="text-primary">8</span></label
-									>
+							<form onSubmit={handleSubmit}>
+								<div className="form-group">
+									<label htmlFor="rating" >Rating: <span className="text-primary">{rating}</span></label>
 									<input
 										type="range"
-										class="custom-range"
+										className="custom-range"
 										min="1"
 										max="10"
 										step="1"
-										value="8"
+										name="rating"
+										value={rating}
+										onChange={handleChange}
 										id="rating"
 									/>
 								</div>
-								<div class="form-group">
+								<div className="form-group">
 									<input
 										type="text"
 										name="title"
-										class="form-control"
+										value={title}
+										onChange={handleChange}
+										className="form-control"
 										placeholder="Review title"
 									/>
 								</div>
-								<div class="form-group">
+								<div className="form-group">
 									<textarea
-										name="review"
+										name="text"
 										rows="10"
-										class="form-control"
+										value={text}
+										onChange={handleChange}
+										className="form-control"
 										placeholder="Your review"
 									></textarea>
 								</div>
-								<div class="form-group">
+								<div className="form-group">
 									<input
 										type="submit"
 										value="Submit Review"
-										class="btn btn-dark btn-block"
+										className="btn btn-dark btn-block"
 									/>
 								</div>
 							</form>
