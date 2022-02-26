@@ -9,8 +9,8 @@ const BootcampBox = ({ bootcamp, editBootcamp=false }) => {
   return (
     <div key={bootcamp._id} className="card mb-3">
       <div className="row no-gutters">
-        <div className="col-md-4">
-          <img src={img1} className="card-img" alt="..." />
+        <div className="col-md-4 my-auto">
+          <img src={`http://localhost:5000/uploads/${bootcamp?.photo}`} className="card-img" alt="..." />
         </div>
         <div className="col-md-8">
           <div className="card-body">
@@ -33,7 +33,7 @@ const BootcampBox = ({ bootcamp, editBootcamp=false }) => {
               {/* {bootcamp?.location?.city}, {bootcamp?.location?.state}, {bootcamp?.location?.country} */}
               </span>
             <p className="card-text">
-              {bootcamp.careers.map((career, index) => {
+              {bootcamp?.careers?.map((career, index) => {
                 if(bootcamp.careers.length !== index+1){
                   return <span key={index}>{career}, </span>
                 } else {

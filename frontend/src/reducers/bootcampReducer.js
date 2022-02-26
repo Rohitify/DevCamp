@@ -1,4 +1,4 @@
-import { ALL_BOOTCAMPS, CREATE_BOOTCAMP, CURRENT_BOOTCAMP, DELETE_BOOTCAMP, LOGS_ERROR, SET_LOADING, UPDATE_BOOTCAMP } from "../actions/types";
+import { ALL_BOOTCAMPS, CREATE_BOOTCAMP, CURRENT_BOOTCAMP, DELETE_BOOTCAMP, LOGS_ERROR, SET_LOADING, UPDATE_BOOTCAMP, UPDATE_BOOTCAMP_IMG } from "../actions/types";
 
 const initialState = {
   bootcamps : [],
@@ -32,6 +32,11 @@ export default (state = initialState, action) => {
         bootcamps: state.bootcamps.map(bootcamp => 
           bootcamp._id === action.payload.data._id ? action.payload.data : bootcamp
         )
+      }
+    case UPDATE_BOOTCAMP_IMG:
+      return {
+        ...state,
+        current: { ...state.current, photo : action.payload.data }
       }
     case CURRENT_BOOTCAMP:
       return {

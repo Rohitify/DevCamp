@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ALL_BOOTCAMPS, CREATE_BOOTCAMP, CURRENT_BOOTCAMP, DELETE_BOOTCAMP, LOGS_ERROR, SET_LOADING, UPDATE_BOOTCAMP } from "./types";
+import { ALL_BOOTCAMPS, CREATE_BOOTCAMP, CURRENT_BOOTCAMP, DELETE_BOOTCAMP, LOGS_ERROR, SET_LOADING, UPDATE_BOOTCAMP, UPDATE_BOOTCAMP_IMG } from "./types";
 
 const config = {
   headers : {
@@ -69,6 +69,22 @@ export const updateBootcamp = (bootcampId, bootcampDetails) => async (dispatch) 
       type: UPDATE_BOOTCAMP,
       payload: res.data
     });
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export const addBootcampPhoto = (bootcampId, bootcampImg) => async (dispatch) => {
+  try {
+    let formdata = new FormData();
+    formdata.append("file", bootcampImg, bootcampImg.name);
+    const res = await axios.put(`/api/v1/bootcamps/${bootcampId}/photo`, formdata);
+
+    dispatch({
+      type: UPDATE_BOOTCAMP_IMG,
+      payload: res.data
+    });
+    
   } catch (err) {
     console.error(err);
   }

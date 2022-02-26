@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { deleteBootcamp, getBootcamp } from '../../actions/bootcampAction'
+import { addBootcampPhoto, deleteBootcamp, getBootcamp } from '../../actions/bootcampAction'
 import BootcampBox from '../../components/BootcampBox'
 
 const ManageBootcamp = () => {
@@ -9,19 +9,40 @@ const ManageBootcamp = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { bootcampId } = useParams();
+
+	const [ bootcampImg, setBootcampImg ] = useState();
+	// const [ imageURL, setImageURL ] = useState();
 	
 	useEffect(() => {
 		dispatch(getBootcamp(bootcampId));
-		// dispatch(getCourses(bootcampId));
 	}, [bootcampId]);
+
+	// useEffect(() => {
+	// 	if(bootcampImg){
+	// 		const newImageURL = URL.createObjectURL(bootcampImg);
+	// 		setImageURL(newImageURL)
+	// 	}
+	// }, [bootcampImg]);
 
 	const { bootcamp } = useSelector(({ bootcamp }) => ({ bootcamp }));
 	const { current } = bootcamp;
+	
+
+	const handleChange = (e) => {
+		setBootcampImg( e.target.files[0] )
+	}
 
 	const handleDelete = () => {
 		dispatch(deleteBootcamp(bootcampId));
 		navigate(-1, { replace: true });
 	}
+
+	const handleUploadImg = (e) => {
+		e.preventDefault();
+		dispatch(addBootcampPhoto(bootcampId, bootcampImg));
+		setBootcampImg();
+	}
+
 
   return (
     <section className="container mt-5">
@@ -31,12 +52,19 @@ const ManageBootcamp = () => {
 						<div className="card-body">
 							<h1 className="mb-4">Manage Bootcamp</h1>
 							{ current && <BootcampBox bootcamp={current} /> }
-							
-							<form className="mb-4">
+							{/*
+									<div className="col-md-4">
+										<img src={imageURL} className="card-img" alt="..." />
+									</div>
+							*/}
+							<form className="mb-4" onSubmit={handleUploadImg}>
 								<div className="form-group">
 									<div className="custom-file">
-										<input type="file" name="photo" className="custom-file-input" id="photo" />
-										<label className="custom-file-label" htmlFor="photo" >Add Bootcamp Image 
+										<input type="file" name="photo" className="custom-file-input" id="photo"
+											accept='image/*' onChange={handleChange}
+										/>
+										<label className="custom-file-label" htmlFor="photo" > 
+											{bootcampImg?.name || "Add Bootcamp Image"}
 										</label>
 									</div>
 								</div>

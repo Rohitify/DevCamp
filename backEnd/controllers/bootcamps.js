@@ -1,4 +1,5 @@
 const path = require("path");
+const fs = require("fs");
 const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("../middleware/async");
 const geocoder = require("../utils/geocoder");
@@ -147,8 +148,8 @@ exports.bootcampPhotoUpload = asyncHandler(async (req, res, next) => {
   }
 
   // Create Custom file name to avoid overriding the same image 
-  file.name = `photo_${bootcamp._id}${path.parse(file.name).ext}`;
-  
+  file.name = `photo_${bootcamp._id}${Date.now()}${path.parse(file.name).ext}`;
+
   file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async err => {
     if(err){
       console.error(err);
@@ -157,7 +158,26 @@ exports.bootcampPhotoUpload = asyncHandler(async (req, res, next) => {
       );
     }
 
+    const BootcampData = await Bootcamp.findById(req.params.id);
+    const BootcampPhoto = BootcampData.photo;
+    console.log(BootcampPhoto);
+
+    if(BootcampPhoto !== "no-photo.jpg") {
+      // Creating a symbolic link to the file photo 
+      // fs.symlinkSync(`${process.env.FILE_UPLOAD_PATH}/${BootcampPhoto}`, "symlinktoPhoto");
+  
+      // delete the photo 
+      fs.unlink(`${process.env.FILE_UPLOAD_PATH}/${BootcampPhoto}`, (err => {
+        if(err) console.log(err);
+        else {
+          console.log("\nDeleted : " + BootcampPhoto);
+        }
+      }))
+
+    }
+
     await Bootcamp.findByIdAndUpdate(req.params.id, { photo: file.name });
+    console.log("\n" + file.name);
 
     res.status(200).json({
       success: true,
