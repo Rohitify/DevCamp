@@ -1,7 +1,5 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getBootcampsInRadius } from '../actions/bootcampAction';
 
 const Showcase = () => {
 	const [searchParams, setSearchParams] = useState({
@@ -11,7 +9,6 @@ const Showcase = () => {
 
 	const { miles, pincode } = searchParams;
 
-	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	const handleChange = (e) => {
@@ -20,9 +17,7 @@ const Showcase = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log({ miles, pincode});
-		dispatch(getBootcampsInRadius(pincode, miles));
-		navigate("/bootcamps", {state : searchParams});
+		navigate(`/bootcamps/${pincode}/${miles}`);
 	}
 
   return (

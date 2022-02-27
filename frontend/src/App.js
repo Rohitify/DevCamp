@@ -38,7 +38,8 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/manageaccount" element={<RequireAuth roles={allUser}><ManageAccount /></RequireAuth>} />
           <Route path="/manageaccount/updatepassword" element={<RequireAuth roles={allUser}><UpdatePassword /></RequireAuth>} />
-          <Route path="/bootcamps" element={<Bootcamps />} />
+          <Route path="/bootcamps" element={<Bootcamps allBootcamps={true} />} />
+          <Route path="/bootcamps/:pincode/:miles" element={<Bootcamps allBootcamps={false} />} />
           <Route path="/bootcamp/:bootcampId" element={<Bootcamp />} />
           <Route path="/bootcamp/:bootcampId/reviews" element={<Reviews />} />
           <Route path="/bootcamps/managebootcamplist" element={<RequireAuth><ManageBootcampList /></RequireAuth>} />

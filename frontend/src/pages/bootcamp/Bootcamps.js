@@ -1,31 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import Filter from '../../components/Filter';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { getBootcamps, getBootcampsInRadius } from '../../actions/bootcampAction';
 import BootcampBox from '../../components/BootcampBox';
 
-const Bootcamps = () => {
+const Bootcamps = ({ allBootcamps = false }) => {
 
-	const { state } = useLocation();
+	const bootcampParam = useParams();
+	console.log(bootcampParam);
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const [searchParams, setSearchParams] = useState({
-		"miles": state?.miles || "",
-		"pincode": state?.pincode || ""
+		"miles": bootcampParam?.miles || "",
+		"pincode": bootcampParam?.pincode || ""
 	});
 
 	const { miles, pincode } = searchParams;
 
-	const dispatch = useDispatch();
-
 	const { bootcamps } = useSelector(({ bootcamp }) => (bootcamp));
 
 	useEffect(() => {
-		if(state === null){
-			setSearchParams({ ...searchParams, miles: "", pincode: ""});
+		if(!allBootcamps){
+			dispatch(getBootcampsInRadius(pincode, miles));
+		} else {
+			setSearchParams({ miles: "", pincode: "" });
 			dispatch(getBootcamps());
 		}
-	}, []);
+	}, [bootcampParam]);
 
 
 	const handleChange = (e) => {
@@ -35,11 +38,12 @@ const Bootcamps = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		dispatch(getBootcampsInRadius(pincode, miles));
+		navigate(`/bootcamps/${pincode}/${miles}`);
 	}
 
   return (
     <section className="browse my-5">
-			<div className="container">
+			<div className="container pt-1">
 				<div className="row mt-5">
 					{/* <!-- Sidebar --> */}
 					<div className="col-md-4">
@@ -50,13 +54,13 @@ const Bootcamps = () => {
 									<div className="col-md-6">
 										<div className="form-group">
 											<input type="text" className="form-control" name="miles" value={miles}
-												onChange={handleChange} placeholder="Miles From" />
+												onChange={handleChange} placeholder="Miles From" required />
 										</div>
 									</div>
 									<div className="col-md-6">
 										<div className="form-group">
 											<input type="text" className="form-control" name="pincode"
-												value={pincode} onChange={handleChange} placeholder="Enter Zipcode" />
+												value={pincode} onChange={handleChange} placeholder="Enter Zipcode" required />
 										</div>
 									</div>
 								</div>
