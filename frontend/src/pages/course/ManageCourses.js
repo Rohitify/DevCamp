@@ -21,13 +21,15 @@ const CourseRow = ({ course, handleDelete }) => {
 	)
 }
 
-const NoCourses = () => {
+const NoCourses = ({ loading = false }) => {
 	return(
 		<tr>
 			<td colSpan={2}>
 				<div className="card-body">
 					<p className="lead text-center">
-						You have not yet added any courses
+						{ loading ? "Loading..." :
+						"You have not yet added any courses"
+						}
 					</p>
 				</div>
 			</td>
@@ -78,9 +80,13 @@ const ManageCourses = () => {
 									</tr>
 								</thead>
 								<tbody>
-									{ courses.length ? 
-										courses.map((course) => <CourseRow key={course._id} course={course} handleDelete={handleDelete} />)
-									: <NoCourses /> }
+									{ !course.loading 
+									? (courses.length ? 
+											courses.map((course) => <CourseRow key={course._id} course={course} handleDelete={handleDelete} />)
+										: <NoCourses />) 
+									:
+									<NoCourses loading={true} />
+									}
 									
 								</tbody>
 							</table>

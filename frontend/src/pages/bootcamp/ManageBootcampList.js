@@ -7,7 +7,7 @@ import BootcampBox from '../../components/BootcampBox';
 
 const ManageBootcampList = () => {
 
-  const { auth, bootcamp } = useSelector(({ auth, bootcamp }) => ({ auth, bootcamp }));
+  const { auth, bootcamp } = useSelector((state) => (state));
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -23,15 +23,19 @@ const ManageBootcampList = () => {
 						<div className="card-body">
 							<h1 className="mb-2">Manage Bootcamp</h1>
               {/* <!-- Bootcamps --> */}
-              { bootcamp.bootcamps?.map((bootcamp) => (
+              { !bootcamp.loading && bootcamp.bootcamps?.map((bootcamp) => (
                 <BootcampBox key={bootcamp._id} bootcamp={bootcamp} editBootcamp={true} />
               )) }
-              { bootcamp.bootcamps.length === 0 &&
-                <p className="lead">
+              { !bootcamp.loading ? (bootcamp.bootcamps.length === 0 &&
+                <p className="lead text-center">
                   You have not yet added a bootcamp
-                </p>
+                </p>)
+                :
+                <h2 className="text-muted text-center">
+                  Loading...
+                </h2>
               }
-              { (bootcamp.bootcamps.length === 0 || auth?.user?.role === "admin") && 
+              { !bootcamp.loading && (bootcamp.bootcamps.length === 0 || auth?.user?.role === "admin") && 
 							  (<Link to="/bootcamp/addbootcamp" className="btn btn-primary btn-block" >Add Bootcamp</Link>)
               }
 							<p className="text-muted mt-5">

@@ -8,7 +8,6 @@ import BootcampBox from '../../components/BootcampBox';
 const Bootcamps = ({ allBootcamps = false }) => {
 
 	const bootcampParam = useParams();
-	console.log(bootcampParam);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
@@ -19,8 +18,10 @@ const Bootcamps = ({ allBootcamps = false }) => {
 
 	const { miles, pincode } = searchParams;
 
-	const { bootcamps } = useSelector(({ bootcamp }) => (bootcamp));
+	const { bootcamp } = useSelector((state) => (state));
+	const {bootcamps} = bootcamp;
 
+ 
 	useEffect(() => {
 		if(!allBootcamps){
 			dispatch(getBootcampsInRadius(pincode, miles));
@@ -28,7 +29,7 @@ const Bootcamps = ({ allBootcamps = false }) => {
 			setSearchParams({ miles: "", pincode: "" });
 			dispatch(getBootcamps());
 		}
-	}, [bootcampParam]);
+	}, [allBootcamps]);
 
 
 	const handleChange = (e) => {
@@ -75,9 +76,17 @@ const Bootcamps = ({ allBootcamps = false }) => {
 					{/* <!-- Main col --> */}
 					<div className="col-md-8">
 						{/* <!-- Bootcamps --> */}
-						{ bootcamps?.map((bootcamp) => (
+						{!bootcamp.loading ? (bootcamps.length === 0 && 
+							<div className="card mb-3"><h5 className="card-header bg-danger text-white">No Bootcamps Availiable</h5></div> )
+							:
+							<h2>Loading...</h2>
+						}
+						{!bootcamp.loading && bootcamps?.map((bootcamp) => (
 							<BootcampBox key={bootcamp._id} bootcamp={bootcamp} />
-						)) }
+						))
+							// :
+							// <h2>Loading...</h2>
+					 	}
 
 
 						{/* <!-- Pagination --> */}

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ALL_COURSES, CREATE_COURSE, CURRENT_COURSE, DELETE_COURSE, LOGS_ERROR, SET_LOADING, UPDATE_COURSE } from "./types";
+import { ALL_COURSES, CREATE_COURSE, CURRENT_COURSE, DELETE_COURSE, LOGS_ERROR, SET_COURSES_LOADING, UPDATE_COURSE } from "./types";
 
 const config = {
   headers : {
@@ -9,6 +9,7 @@ const config = {
 
 export const getCourses = (bootcampId) => async (dispatch) => {
   try {
+    dispatch(setCoursesLoding());
     const res = await axios.get(`/api/v1/bootcamps/${bootcampId}/courses`);
 
     dispatch({
@@ -22,6 +23,8 @@ export const getCourses = (bootcampId) => async (dispatch) => {
 
 export const getCourse = (bootcampId, courseId) => async (dispatch) => {
   try {
+    dispatch(setCoursesLoding());
+
     const res = await axios.get(`/api/v1/bootcamps/${bootcampId}/courses/${courseId}`);
 
     dispatch({
@@ -35,6 +38,8 @@ export const getCourse = (bootcampId, courseId) => async (dispatch) => {
 
 export const createCourse = (bootcampId, courseDetails) => async (dispatch) => {
   try {
+    dispatch(setCoursesLoding());
+
     const res = await axios.post(`/api/v1/bootcamps/${bootcampId}/courses`, courseDetails, config);
 
     dispatch({
@@ -48,6 +53,8 @@ export const createCourse = (bootcampId, courseDetails) => async (dispatch) => {
 
 export const updateCourse = (bootcampId, courseId, courseDetails) => async (dispatch) => {
   try {
+    dispatch(setCoursesLoding());
+
     const res = await axios.put(`/api/v1/bootcamps/${bootcampId}/courses/${courseId}`, courseDetails, config);
 
     dispatch({
@@ -61,6 +68,8 @@ export const updateCourse = (bootcampId, courseId, courseDetails) => async (disp
 
 export const deleteCourse = (bootcampId, courseId) => async (dispatch) => {
   try {
+    dispatch(setCoursesLoding());
+    
     const res = await axios.delete(`/api/v1/bootcamps/${bootcampId}/courses/${courseId}`);
 
     dispatch({
@@ -72,8 +81,8 @@ export const deleteCourse = (bootcampId, courseId) => async (dispatch) => {
   }
 }
 
-export const setLoding = () => {
+export const setCoursesLoding = () => {
   return {
-    type: SET_LOADING
+    type: SET_COURSES_LOADING
   }
 }

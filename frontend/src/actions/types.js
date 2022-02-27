@@ -8,6 +8,7 @@ export const AUTH_ERROR = 'AUTH_ERROR';
 export const LOGOUT = 'LOGOUT';
 export const UPDATE_DETAILS = 'UPDATE_DETAILS';
 export const UPDATE_PASSWORD = 'UPDATE_PASSWORD';
+export const SET_LOADING = "SET_LOADING";
 
 // Bootcamps 
 export const ALL_BOOTCAMPS = "ALL_BOOTCAMPS";
@@ -20,6 +21,7 @@ export const DELETE_BOOTCAMP = "DELETE_BOOTCAMP";
 export const CLEAR_BOOTCAMPS = "CLEAR_BOOTCAMPS";
 export const CLEAR_BOOTCAMP = "CLEAR_BOOTCAMP";
 export const CLEAR_FILTERED = "CLEAR_FILTERED";
+export const SET_BOOTCAMPS_LOADING = "SET_BOOTCAMPS_LOADING";
 
 // Courses 
 export const ALL_COURSES = "ALL_COURSES";
@@ -29,6 +31,7 @@ export const UPDATE_COURSE = "UPDATE_COURSE";
 export const DELETE_COURSE = "DELETE_COURSE";
 export const CLEAR_COURSES = "CLEAR_COURSES";
 export const CLEAR_COURSE = "CLEAR_COURSE";
+export const SET_COURSES_LOADING = "SET_COURSES_LOADING";
 
 // Review 
 export const ALL_REVIEWS = "ALL_REVIEWS";
@@ -45,6 +48,6 @@ export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
 
 // Misc 
-export const SET_LOADING = "SET_LOADING";
 export const LOGS_ERROR = "LOGS_ERROR";
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+export const SET_EREOR_LOADING = "SET_REVIEW_LOADING";

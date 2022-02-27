@@ -41,7 +41,7 @@ const AddCourse = ({ editCourse = false }) => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		editCourse ? dispatch(updateCourse(bootcampId, courseId, courseDetails)) : dispatch(createCourse(bootcampId, courseDetails));
-		navigate(-1, { replace: true });
+		// navigate(-1, { replace: true });
 	}
 
   return (
@@ -58,6 +58,8 @@ const AddCourse = ({ editCourse = false }) => {
 							</button>
 							<h1 className="mb-2">{bootcampName}</h1>
 							<h3 className="text-primary mb-4">{ editCourse ? "Edit" : "Add" } Course</h3>
+							{ course.loading ? <h1>Loading...</h1> 
+								:
 							<form onSubmit={handleSubmit}>
 								<div className="form-group">
 									<label>Course Title</label>
@@ -139,6 +141,7 @@ const AddCourse = ({ editCourse = false }) => {
 									/>
 								</div>
 							</form>
+							}
 						</div>
 					</div>
 				</div>

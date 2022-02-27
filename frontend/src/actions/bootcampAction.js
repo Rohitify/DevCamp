@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ALL_BOOTCAMPS, CREATE_BOOTCAMP, CURRENT_BOOTCAMP, DELETE_BOOTCAMP, LOGS_ERROR, SET_LOADING, UPDATE_BOOTCAMP, UPDATE_BOOTCAMP_IMG } from "./types";
+import { ALL_BOOTCAMPS, CREATE_BOOTCAMP, CURRENT_BOOTCAMP, DELETE_BOOTCAMP, LOGS_ERROR, SET_BOOTCAMPS_LOADING, UPDATE_BOOTCAMP, UPDATE_BOOTCAMP_IMG } from "./types";
 
 const config = {
   headers : {
@@ -9,6 +9,7 @@ const config = {
 
 export const getBootcamps = (q = "/") => async(dispatch) => {
   try {
+    dispatch(setBootcampsLoding());
     const res = await axios.get(`/api/v1/bootcamps${q}`);
 
     dispatch({
@@ -26,6 +27,7 @@ export const getBootcamps = (q = "/") => async(dispatch) => {
 
 export const getBootcampsInRadius = (pincode, distance) => async(dispatch) => {
   try {
+    dispatch(setBootcampsLoding());
     const res = await axios.get(`/api/v1/bootcamps/radius/${pincode}/${distance}`);
 
     dispatch({
@@ -39,6 +41,7 @@ export const getBootcampsInRadius = (pincode, distance) => async(dispatch) => {
 
 export const getBootcamp = (bootcampId) => async(dispatch) => {
   try {
+    dispatch(setBootcampsLoding());
     const res = await axios.get(`/api/v1/bootcamps/${bootcampId}`);
 
     dispatch({
@@ -52,6 +55,7 @@ export const getBootcamp = (bootcampId) => async(dispatch) => {
 
 export const createBootcamp = (bootcampDetails) => async (dispatch) => {
   try {
+    dispatch(setBootcampsLoding());
     const res = await axios.post(`/api/v1/bootcamps`, bootcampDetails, config);
     dispatch({
       type: CREATE_BOOTCAMP,
@@ -64,6 +68,7 @@ export const createBootcamp = (bootcampDetails) => async (dispatch) => {
 
 export const updateBootcamp = (bootcampId, bootcampDetails) => async (dispatch) => {
   try {
+    dispatch(setBootcampsLoding());
     const res = await axios.put(`/api/v1/bootcamps/${bootcampId}`, bootcampDetails, config);
     dispatch({
       type: UPDATE_BOOTCAMP,
@@ -76,6 +81,7 @@ export const updateBootcamp = (bootcampId, bootcampDetails) => async (dispatch) 
 
 export const addBootcampPhoto = (bootcampId, bootcampImg) => async (dispatch) => {
   try {
+    dispatch(setBootcampsLoding());
     let formdata = new FormData();
     formdata.append("file", bootcampImg, bootcampImg.name);
     const res = await axios.put(`/api/v1/bootcamps/${bootcampId}/photo`, formdata);
@@ -92,6 +98,7 @@ export const addBootcampPhoto = (bootcampId, bootcampImg) => async (dispatch) =>
 
 export const deleteBootcamp = (bootcampId) => async (dispatch) => {
   try {
+    dispatch(setBootcampsLoding());
     const res = await axios.delete(`/api/v1/bootcamps/${bootcampId}`);
 
     dispatch({
@@ -103,10 +110,10 @@ export const deleteBootcamp = (bootcampId) => async (dispatch) => {
   }
 }
 
-export const setLoding = () => {
-  return {
-    type: SET_LOADING
-  }
+export const setBootcampsLoding = () => {
+  return ({
+    type: SET_BOOTCAMPS_LOADING
+  })
 }
 
 export const currentBootcampNull = (dispatch) => {

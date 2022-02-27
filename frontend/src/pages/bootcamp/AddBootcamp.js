@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useNavigate} from 'react-router-dom'
 import { createBootcamp, updateBootcamp } from '../../actions/bootcampAction';
 
 const AddBootcamp = ({ editBootcamp = false }) => {
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { bootcamp } = useSelector(({bootcamp}) => ({bootcamp}))
 	let currentBootcamp = bootcamp?.current;
@@ -47,7 +48,6 @@ const AddBootcamp = ({ editBootcamp = false }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(bootcampData);
 		if(editBootcamp === true){
 			dispatch(updateBootcamp(currentBootcamp._id, bootcampData));
 		} else {
@@ -58,11 +58,14 @@ const AddBootcamp = ({ editBootcamp = false }) => {
 	
 
   return (
-    <section className="container mt-5">
+    <section className="container mt-5 pt-4">
 			<h1 className="mb-2">{editBootcamp ? "Edit" : "Add"} Bootcamp</h1>
 			<p>
 				Important: You must be affiliated with a bootcamp to add to DevCamper
 			</p>
+			{ bootcamp.loading ? <h1>{editBootcamp ? "Updating" : "Creating"} Bootcamp...</h1> 
+			:
+
 			<form onSubmit={handleSubmit}>
 				<div className="row">
 					<div className="col-md-6">
@@ -234,9 +237,12 @@ const AddBootcamp = ({ editBootcamp = false }) => {
 						value="Submit Bootcamp"
 						className="btn btn-success btn-block my-4"
 					/>
-					<a href="manage-bootcamp.html" className="btn btn-danger btn-block mb-4">Cancel</a>
+					<button className="btn btn-danger btn-block mb-4"
+						onClick={() => navigate(-1, { replace: true })}
+					>Cancel</button>
 				</div>
 			</form>
+			}
 		</section>
   )
 }

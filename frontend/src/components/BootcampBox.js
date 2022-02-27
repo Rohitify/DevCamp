@@ -1,8 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
-import { getBootcamp } from '../actions/bootcampAction';
-import img1 from "../resource/img/image_1.jpg"
+import { Link} from 'react-router-dom';
 
 const BootcampBox = ({ bootcamp, editBootcamp=false }) => {
 

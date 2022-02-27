@@ -13,8 +13,8 @@ const Reviews = () => {
 		dispatch(getReviews(bootcampId));
 	}, [bootcampId]);
 
-	const storedData = useSelector(({ review }) => ({ review }));
-	const allReviews = storedData.review.reviews;
+	const { review, bootcamp } = useSelector((state) => (state));
+	const allReviews = review.reviews;
 
   return (
     <div>
@@ -27,8 +27,11 @@ const Reviews = () => {
 							<i className="fas fa-chevron-left"></i> Bootcamp Info</button>
 						<h1 className="mb-4">DevWorks Bootcamp Reviews</h1>
 						{/* <!-- Reviews --> */}
-						{ allReviews.length === 0 && <div className="card mb-3"><h5 className="card-header bg-danger text-white">No Reviews Availiable</h5></div> }
-						{ allReviews.map((review) => (
+						{ !review.loading ? (allReviews.length === 0 && <div className="card mb-3"><h5 className="card-header bg-danger text-white">No Reviews Availiable</h5></div>)
+						:
+							<div className="card mb-3"><h5 className="card-header bg-dark text-white">Loading Reviews Info...</h5></div>
+						}
+						{ !review.loading && allReviews.map((review) => (
 							<div key={review._id} className="card mb-3">
 								<h5 className="card-header bg-dark text-white">{review?.title}</h5>
 								<div className="card-body">
@@ -38,7 +41,7 @@ const Reviews = () => {
 									<p className="card-text">
 										{review?.text}
 									</p>
-									<p className="text-muted">Writtern By Kevin Smith</p>
+									<p className="text-muted">Writtern By {review?.user?.name}</p>
 								</div>
 							</div>
 						)) }
@@ -50,7 +53,7 @@ const Reviews = () => {
 						<h1 className="text-center my-4">
 							<span
 								className="badge badge-secondary badge-success rounded-circle p-3"
-								>8.8</span
+								>{bootcamp.current?.averageRating}</span
 							>
 							Rating
 						</h1>

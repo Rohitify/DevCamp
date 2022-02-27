@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { updatePassword } from '../../actions/authAction';
 
 const UpdatePassword = () => {
 	const navigate = useNavigate();
+	const { auth } = useSelector(state => state);
+
 	const [passwordData, setPasswordData] = useState({
 		currentPassword : "",
 		newPassword : "",
@@ -21,7 +23,7 @@ const UpdatePassword = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const res = dispatch(updatePassword(passwordData));
+		dispatch(updatePassword(passwordData));
 		// res.then(() => navigate(-1, { replace: true })).catch((err) => console.error(err));
 	}
 
@@ -32,54 +34,58 @@ const UpdatePassword = () => {
 					<div className="card bg-white py-2 px-4">
 						<div className="card-body">
 							<h1 className="mb-2">Update Password</h1>
-							<form onSubmit={handleSubmit}>
-								<div className="form-group">
-									<label>Current Password</label>
-									<input
-										type="password"
-										name="currentPassword"
-										value={currentPassword}
-										onChange={handleChange}
-										className="form-control"
-										placeholder="Current Password"
-										minLength={6}
-										required
-									/>
-								</div>
-								<div className="form-group">
-									<label>New Password</label>
-									<input
-										type="password"
-										name="newPassword"
-										value={newPassword}
-										onChange={handleChange}
-										className="form-control"
-										placeholder="New Password"
-										minLength={6}
-										required
-									/>
-								</div>
-								<div className="form-group">
-									<label>Confirm New Password</label>
-									<input
-										type="password"
-										name="newPassword2"
-										value={newPassword2}
-										onChange={handleChange}
-										className="form-control"
-										placeholder="Confirm New Password"
-										minLength={6}
-										required
-									/>
-								</div>
-								<div className="form-group">
-											<input
-												type="submit"
-												value="Update Password"
-												className="btn btn-dark btn-block"
-											/>
+							{ auth.loading ? 
+								<h2>Loading...</h2>
+							:
+								<form onSubmit={handleSubmit}>
+									<div className="form-group">
+										<label>Current Password</label>
+										<input
+											type="password"
+											name="currentPassword"
+											value={currentPassword}
+											onChange={handleChange}
+											className="form-control"
+											placeholder="Current Password"
+											minLength={6}
+											required
+										/>
 									</div>
-							</form>
+									<div className="form-group">
+										<label>New Password</label>
+										<input
+											type="password"
+											name="newPassword"
+											value={newPassword}
+											onChange={handleChange}
+											className="form-control"
+											placeholder="New Password"
+											minLength={6}
+											required
+										/>
+									</div>
+									<div className="form-group">
+										<label>Confirm New Password</label>
+										<input
+											type="password"
+											name="newPassword2"
+											value={newPassword2}
+											onChange={handleChange}
+											className="form-control"
+											placeholder="Confirm New Password"
+											minLength={6}
+											required
+										/>
+									</div>
+									<div className="form-group">
+												<input
+													type="submit"
+													value="Update Password"
+													className="btn btn-dark btn-block"
+												/>
+										</div>
+								</form>
+							}
 						</div>
 					</div>
 				</div>

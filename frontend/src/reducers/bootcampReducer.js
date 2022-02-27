@@ -1,4 +1,4 @@
-import { ALL_BOOTCAMPS, CREATE_BOOTCAMP, CURRENT_BOOTCAMP, DELETE_BOOTCAMP, LOGS_ERROR, SET_LOADING, UPDATE_BOOTCAMP, UPDATE_BOOTCAMP_IMG } from "../actions/types";
+import { ALL_BOOTCAMPS, CREATE_BOOTCAMP, CURRENT_BOOTCAMP, DELETE_BOOTCAMP, LOGS_ERROR, SET_BOOTCAMPS_LOADING, UPDATE_BOOTCAMP, UPDATE_BOOTCAMP_IMG } from "../actions/types";
 
 const initialState = {
   bootcamps : [],
@@ -31,12 +31,14 @@ export default (state = initialState, action) => {
         current: action.payload.data,
         bootcamps: state.bootcamps.map(bootcamp => 
           bootcamp._id === action.payload.data._id ? action.payload.data : bootcamp
-        )
+        ),
+        loading: false
       }
     case UPDATE_BOOTCAMP_IMG:
       return {
         ...state,
-        current: { ...state.current, photo : action.payload.data }
+        current: { ...state.current, photo : action.payload.data },
+        loading: false
       }
     case CURRENT_BOOTCAMP:
       return {
@@ -47,9 +49,10 @@ export default (state = initialState, action) => {
     case DELETE_BOOTCAMP:
       return {
         ...state,
-        bootcamps: state.bootcamps.filter(bootcamp => bootcamp._id !== state.current._id)
+        bootcamps: state.bootcamps.filter(bootcamp => bootcamp._id !== state.current._id),
+        loading: false
       }
-    case SET_LOADING: 
+    case SET_BOOTCAMPS_LOADING: 
       return {
         ...state,
         loading: true

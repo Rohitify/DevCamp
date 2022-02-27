@@ -35,13 +35,10 @@ const AddReview = ({ editReview = false }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		editReview ? dispatch(updateReview(reviewId, reviewDetails)) : dispatch(createReview(bootcampId, reviewDetails))
+		editReview ? dispatch(updateReview(reviewId, reviewDetails)) : dispatch(createReview(bootcampId, reviewDetails));
+		// if(!review.loading) navigate(-1, {replace: true});
 	}
 
-	if(review.loading){
-		console.log("hello")
-		return(<div>loading</div>)
-	}
 
   return (
     <div>
@@ -50,7 +47,7 @@ const AddReview = ({ editReview = false }) => {
 				<div className="col-md-8 m-auto">
 					<div className="card bg-white py-2 px-4">
 						<div className="card-body">
-							<button className="btn btn-link text-secondary my-3" onClick={() => navigate(-1)}>
+							<button className="btn btn-link text-secondary my-3" onClick={() => navigate(-1, {replace: true})}>
 								<i className="fas fa-chevron-left"></i> Bootcamp Info
 							</button>
 							<h1 className="mb-2">DevWorks Bootcamp</h1>
@@ -58,49 +55,52 @@ const AddReview = ({ editReview = false }) => {
 							<p>
 								You must have attended and graduated this bootcamp to review
 							</p>
-							<form onSubmit={handleSubmit}>
-								<div className="form-group">
-									<label htmlFor="rating" >Rating: <span className="text-primary">{rating}</span></label>
-									<input
-										type="range"
-										className="custom-range"
-										min="1"
-										max="10"
-										step="1"
-										name="rating"
-										value={rating}
-										onChange={handleChange}
-										id="rating"
-									/>
-								</div>
-								<div className="form-group">
-									<input
-										type="text"
-										name="title"
-										value={title}
-										onChange={handleChange}
-										className="form-control"
-										placeholder="Review title"
-									/>
-								</div>
-								<div className="form-group">
-									<textarea
-										name="text"
-										rows="10"
-										value={text}
-										onChange={handleChange}
-										className="form-control"
-										placeholder="Your review"
-									></textarea>
-								</div>
-								<div className="form-group">
-									<input
-										type="submit"
-										value="Submit Review"
-										className="btn btn-dark btn-block"
-									/>
-								</div>
-							</form>
+							{ review.loading ? <h1>Form loading...</h1> 
+							: 
+								<form onSubmit={handleSubmit}>
+									<div className="form-group">
+										<label htmlFor="rating" >Rating: <span className="text-primary">{rating}</span></label>
+										<input
+											type="range"
+											className="custom-range"
+											min="1"
+											max="10"
+											step="1"
+											name="rating"
+											value={rating}
+											onChange={handleChange}
+											id="rating"
+										/>
+									</div>
+									<div className="form-group">
+										<input
+											type="text"
+											name="title"
+											value={title}
+											onChange={handleChange}
+											className="form-control"
+											placeholder="Review title"
+										/>
+									</div>
+									<div className="form-group">
+										<textarea
+											name="text"
+											rows="10"
+											value={text}
+											onChange={handleChange}
+											className="form-control"
+											placeholder="Your review"
+										></textarea>
+									</div>
+									<div className="form-group">
+										<input
+											type="submit"
+											value="Submit Review"
+											className="btn btn-dark btn-block"
+										/>
+									</div>
+								</form>
+							}
 						</div>
 					</div>
 				</div>

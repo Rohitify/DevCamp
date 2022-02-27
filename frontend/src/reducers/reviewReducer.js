@@ -10,7 +10,6 @@ const initialState = {
 export default (state = initialState, action) => {
   switch(action.type) {
     case ALL_REVIEWS:
-      console.log("first")
       return {
         ...state,
         reviews: action.payload.data,
@@ -20,10 +19,16 @@ export default (state = initialState, action) => {
     case CURRENT_REVIEW:
     case CREATE_REVIEW:
     case UPDATE_REVIEW:
-    case DELETE_REVIEW:
       return {
         ...state,
         current: action.payload.data,
+        loading: false
+      }
+    case DELETE_REVIEW:
+      return {
+        ...state,
+        reviews: state.reviews.filter(review => review._id !== action.payload),
+        current: null,
         loading: false
       }
     case SET_REVIEW_LOADING:

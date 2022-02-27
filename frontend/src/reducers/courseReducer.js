@@ -1,4 +1,4 @@
-import { ALL_COURSES, CREATE_COURSE, CURRENT_COURSE, DELETE_COURSE, LOGS_ERROR, SET_LOADING, UPDATE_COURSE } from "../actions/types";
+import { ALL_COURSES, CREATE_COURSE, CURRENT_COURSE, DELETE_COURSE, LOGS_ERROR, SET_COURSES_LOADING, UPDATE_COURSE } from "../actions/types";
 
 const initialState = {
   courses : [],
@@ -31,7 +31,7 @@ export default (state = initialState, action) => {
         current: null,
         loading: false
       }
-    case SET_LOADING: 
+    case SET_COURSES_LOADING: 
       return {
         ...state,
         loading: true

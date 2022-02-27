@@ -2,9 +2,9 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getReviews, setLoading } from '../../actions/reviewAction'
+import { deleteReview, getReviews, setLoading } from '../../actions/reviewAction'
 
-const ReviewRow = ({ review }) => {
+const ReviewRow = ({ review, handleDeleteReview }) => {
 	return(
 		<tr>
 			<td>{review?.title}</td>
@@ -13,7 +13,9 @@ const ReviewRow = ({ review }) => {
 				<Link to={`editreview/${review?._id}`} className="btn btn-secondary">
 						<i className="fas fa-pencil-alt"></i>
 				</Link>
-				<button className="btn btn-danger">
+				<button className="btn btn-danger"
+					onClick={() => handleDeleteReview(review?._id)}
+				>
 					<i className="fas fa-times"></i>
 				</button>
 			</td>
@@ -28,19 +30,12 @@ const ManageReviews = () => {
 	const userId = auth.user?._id;
 	const reviews = review.reviews;
 	useEffect(() => {
-		// dispatch(setLoading());
 		dispatch(getReviews(null, userId));
 	}, [userId]);
 
-	// if(reviews.length === 0 && review.loading === false) {
-	// 	return(
-	// 		<div>
-  //     	<section className="container mt-5">
-	// 				No Reviews available
-	// 			</section>
-	// 		</div>
-	// 	)
-	// }
+	const onDeleteReview = (reviewId) => {
+		dispatch(deleteReview(reviewId));
+	}
 
   return (
     <div>
@@ -59,8 +54,8 @@ const ManageReviews = () => {
 									</tr>
 								</thead>
 								<tbody>
-									{ reviews.length === 0 && (!review.loading ? <tr><td className='text-center' colSpan={3}>No Reviews available</td></tr> : <tr><td>Loading...</td></tr> ) }
-									{ reviews.map((review) => (<ReviewRow key={review._id} review={review} />)) }
+									{ !review.loading ? (reviews.length === 0 && <tr><td className='text-center' colSpan={3}>No Reviews available</td></tr> ) : <tr><td className='text-center' colSpan={3}>Loading...</td></tr> }
+									{ !review.loading && reviews.map((review) => (<ReviewRow key={review._id} review={review} handleDeleteReview={onDeleteReview} />)) }
 								</tbody>
 							</table>
 						</div>

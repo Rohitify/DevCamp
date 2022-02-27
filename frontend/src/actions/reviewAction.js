@@ -9,7 +9,7 @@ const config = {
 
 export const getReviews = (bootcampId = null, userId = null) => async (dispatch) => {
   try {
-    dispatch(setLoading());
+    dispatch(setReviewLoading());
     let res;
     if(userId === null && bootcampId !== null){
       res = await axios.get(`/api/v1/bootcamps/${bootcampId}/reviews`);
@@ -28,7 +28,7 @@ export const getReviews = (bootcampId = null, userId = null) => async (dispatch)
 
 export const getReview = (reviewId) => async (dispatch) => {
   try {
-    setLoading();
+    dispatch(setReviewLoading());
     const res = await axios.get(`/api/v1/reviews/${reviewId}`);
 
     dispatch({
@@ -42,6 +42,7 @@ export const getReview = (reviewId) => async (dispatch) => {
 
 export const createReview = (bootcampId, reviewDetails) => async (dispatch) => {
   try {
+    dispatch(setReviewLoading());
     const res = await axios.post(`/api/v1/bootcamps/${bootcampId}/reviews`, reviewDetails, config);
 
     dispatch({
@@ -55,7 +56,7 @@ export const createReview = (bootcampId, reviewDetails) => async (dispatch) => {
 
 export const updateReview = (reviewId, reviewDetails) => async (dispatch) => {
   try {
-    setLoading();
+    dispatch(setReviewLoading());
     const res = await axios.put(`/api/v1/reviews/${reviewId}`, reviewDetails, config);
 
     dispatch({
@@ -67,20 +68,21 @@ export const updateReview = (reviewId, reviewDetails) => async (dispatch) => {
   }
 }
 
-export const deleteReview = (bootcampId, reviewId) => async (dispatch) => {
+export const deleteReview = (reviewId) => async (dispatch) => {
   try {
-    const res = await axios.delete(`/api/v1/bootcamps/${bootcampId}/reviews/${reviewId}`);
+    dispatch(setReviewLoading());
+    await axios.delete(`/api/v1/reviews/${reviewId}`);
 
     dispatch({
       type: DELETE_REVIEW,
-      payload: res.data
+      payload: reviewId
     })
   } catch (err) {
     console.error(err);
   }
 }
 
-export const setLoading = () => {
+export const setReviewLoading = () => {
   return ({
     type: SET_REVIEW_LOADING
   })

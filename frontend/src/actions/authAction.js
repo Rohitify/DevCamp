@@ -1,9 +1,16 @@
 import axios from "axios";
 import { CLEAR_ERRORS, LOAD_USER, LOGIN_SUCCESS, LOGOUT, LOGS_ERROR, REGISTER_SUCCESS, SET_LOADING, UPDATE_DETAILS, UPDATE_PASSWORD } from "./types";
 
+const config = {
+  headers : {
+    "Content-Type" : "application/json"
+  }
+}
+
 // Load User 
 export const loadUser = () => async (dispatch) => {
   try {
+    dispatch(setLoding());
     const res = await axios.get(`/api/v1/auth/me`);
     dispatch({
       type: LOAD_USER,
@@ -21,12 +28,8 @@ export const loadUser = () => async (dispatch) => {
 // Login User 
 export const login = (loginInfo) => async (dispatch) => {
   try {
-    setLoding();
-    const config = {
-      headers : {
-        "Content-Type" : "application/json"
-      }
-    }
+    dispatch(setLoding());
+    
     const res = await axios.post(`/api/v1/auth/login`, loginInfo, config);
     dispatch({
       type: LOGIN_SUCCESS,
@@ -47,12 +50,7 @@ export const login = (loginInfo) => async (dispatch) => {
 // Register User 
 export const register = (registerInfo) => async(dispatch) => {
   try {
-    setLoding();
-    const config = {
-      headers : {
-        "Content-Type" : "application/json"
-      }
-    }
+    dispatch(setLoding());
 
     const res = await axios.post(`/api/v1/auth/register`, registerInfo, config);
 
@@ -74,6 +72,7 @@ export const register = (registerInfo) => async(dispatch) => {
 // Logout 
 export const logout = () => async(dispatch) => { 
   try {
+    dispatch(setLoding());
     await axios.get("/api/v1/auth/logout");
     dispatch({
       type: LOGOUT
@@ -87,14 +86,9 @@ export const logout = () => async(dispatch) => {
   }
 }
 
-const config = {
-  headers : {
-    "Content-Type" : "application/json"
-  }
-}
-
 export const updateDetails = (userDetails) => async (dispatch) => {
   try {
+    dispatch(setLoding());
     const res = await axios.put(`/api/v1/auth/updatedetails`, userDetails, config);
     dispatch({
       type: UPDATE_DETAILS,
@@ -107,6 +101,7 @@ export const updateDetails = (userDetails) => async (dispatch) => {
 
 export const updatePassword = (passwordDetails) => async (dispatch) => {
   try {
+    dispatch(setLoding());
     const res = await axios.put(`/api/v1/auth/updatepassword`, passwordDetails, config);
     dispatch({
       type: UPDATE_PASSWORD,
