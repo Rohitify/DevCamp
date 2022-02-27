@@ -60,12 +60,12 @@ ReviewSchema.statics.getAverageRating = async function(bootcampId) {
   }
 }
 
-ReviewSchema.post("save", function() {
-  this.constructor.getAverageRating(this.bootcamp);
+ReviewSchema.post("save", async function() {
+  await this.constructor.getAverageRating(this.bootcamp);
 });
 
-ReviewSchema.pre("remove", function() {
-  this.constructor.getAverageRating(this.bootcamp);
+ReviewSchema.post("remove", async function() {
+  await this.constructor.getAverageRating(this.bootcamp);
 });
 
 module.exports = mongoose.model("Review", ReviewSchema);
