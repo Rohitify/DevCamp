@@ -16,6 +16,7 @@ const Bootcamp = () => {
 	useEffect(() => {
 			dispatch(getBootcamp(bootcampId));
 			dispatch(getCourses(bootcampId));
+			// eslint-disable-next-line
 	}, [bootcampId]);
 
 
@@ -77,10 +78,10 @@ const Bootcamp = () => {
 						 <h1 className="text-center my-4"><span className="badge badge-secondary badge-success rounded-circle p-3"> {current?.averageRating} </span> Rating</h1>
 						 {/* <!-- Buttons --> */} 
 						 <Link to={`reviews`} className="btn btn-dark btn-block my-3"><i className="fas fa-comments"></i>  Read Reviews</Link>
-							{ auth.isAuthenticated && 
+							{ auth.isAuthenticated && (auth.user?._id !== current?.user) && (auth.user?.role !== "publisher") &&
 						 		<Link to={`addreview`} className="btn btn-light btn-block my-3"><i className="fas fa-pencil-alt"></i>  Write a Review</Link>
 							}
-						 <a href={current?.website} target="_blank" className="btn btn-secondary btn-block my-3"><i className="fas fa-globe"></i>  Visit Website</a>
+						 <a href={current?.website || "#"} target={current?.website ? "_blank" : '_self'} rel='noreferrer' className="btn btn-secondary btn-block my-3"><i className="fas fa-globe"></i>Visit Website</a>
 						 {/* <!-- Map --> */}
 						 {/* <div id='map' style={{width: "100%", height: "300px"}}></div> */}
 						 {/* <!-- Perks --> */}

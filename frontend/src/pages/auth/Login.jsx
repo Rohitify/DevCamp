@@ -15,16 +15,11 @@ const Login = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	
-	// const storedData = useSelector(({ auth, bootcamps }) => ({auth, bootcamps}));
-	// const { auth, bootcamps } = storedData
-	// console.log("token", auth.token);
 
-	const storedData = useSelector( ({ auth }) => ({ auth }) );
-	const auth = storedData.auth;
-	
+	const { auth } = useSelector(state => state);	
 
 	useEffect(() => {
-		if(auth?.isAuthenticated){
+		if(auth.isAuthenticated){
 			// props.history.push("/");
 			navigate("/", { replace : true });
 		}

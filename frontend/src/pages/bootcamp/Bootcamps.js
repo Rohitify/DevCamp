@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Filter from '../../components/Filter';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'
+import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { getBootcamps, getBootcampsInRadius } from '../../actions/bootcampAction';
 import BootcampBox from '../../components/BootcampBox';
 
@@ -29,6 +29,7 @@ const Bootcamps = ({ allBootcamps = false }) => {
 			setSearchParams({ miles: "", pincode: "" });
 			dispatch(getBootcamps());
 		}
+		// eslint-disable-next-line
 	}, [allBootcamps]);
 
 
@@ -44,7 +45,7 @@ const Bootcamps = ({ allBootcamps = false }) => {
 
   return (
     <section className="browse my-5">
-			<div className="container pt-1">
+			<div className="container">
 				<div className="row mt-5">
 					{/* <!-- Sidebar --> */}
 					<div className="col-md-4">

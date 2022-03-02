@@ -41,24 +41,26 @@ const AddBootcamp = ({ editBootcamp = false }) => {
 			careersValue = careers.filter(career => career !== e.target.value)
 		}
 		else{
-			careersValue = [ ... careers, e.target.value];
+			careersValue = [ ...careers, e.target.value];
 		}
 		setBootcampData({ ...bootcampData, [e.target.name] : careersValue });
 	}
-
+ 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		let res;
 		if(editBootcamp === true){
-			dispatch(updateBootcamp(currentBootcamp._id, bootcampData));
+			res = dispatch(updateBootcamp(currentBootcamp._id, bootcampData));
 		} else {
-			dispatch(createBootcamp(bootcampData));
+			res = dispatch(createBootcamp(bootcampData));
 		}
+		res.then((bootcampId) => navigate(`/bootcamp/${bootcampId}/managebootcamp`, { replace : true }));
 	}
 
 	
 
   return (
-    <section className="container mt-5 pt-4">
+    <section className="container mt-4">
 			<h1 className="mb-2">{editBootcamp ? "Edit" : "Add"} Bootcamp</h1>
 			<p>
 				Important: You must be affiliated with a bootcamp to add to DevCamper
@@ -152,6 +154,7 @@ const AddBootcamp = ({ editBootcamp = false }) => {
 										onChange={handleChange}
 										placeholder="Description (What you offer, etc)"
 										maxLength="500"
+										required
 									></textarea>
 									<small className="form-text text-muted"
 										>No more than 500 characters</small
@@ -159,7 +162,7 @@ const AddBootcamp = ({ editBootcamp = false }) => {
 								</div>
 								<div className="form-group">
 									<label>Careers</label>
-									<select name="careers" value={careers} onChange={handleSelect} className="custom-select" multiple>
+									<select name="careers" value={careers} onChange={handleSelect} className="custom-select" multiple required>
 										{/* <option defaultChecked>Select all that apply</option> */}
 										<option value="Web Development">Web Development</option>
 										<option value="Mobile Development" 
@@ -234,15 +237,15 @@ const AddBootcamp = ({ editBootcamp = false }) => {
 				<div className="form-group">
 					<input
 						type="submit"
-						value="Submit Bootcamp"
+						value={editBootcamp ? "Update Bootcamp" : "Create Bootcamp"}
 						className="btn btn-success btn-block my-4"
 					/>
-					<button className="btn btn-danger btn-block mb-4"
-						onClick={() => navigate(-1, { replace: true })}
-					>Cancel</button>
 				</div>
 			</form>
 			}
+					<button className="btn btn-danger btn-block mb-4"
+						onClick={() => navigate(-1, { replace: true })}
+					>Cancel</button>
 		</section>
   )
 }

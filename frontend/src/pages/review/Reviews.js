@@ -11,9 +11,10 @@ const Reviews = () => {
 
 	useEffect(() => {
 		dispatch(getReviews(bootcampId));
+		// eslint-disable-next-line
 	}, [bootcampId]);
 
-	const { review, bootcamp } = useSelector((state) => (state));
+	const { review, bootcamp, auth } = useSelector((state) => (state));
 	const allReviews = review.reviews;
 
   return (
@@ -58,9 +59,11 @@ const Reviews = () => {
 							Rating
 						</h1>
 						{/* <!-- Buttons --> */}
+						{ auth.isAuthenticated && (auth.user?._id !== bootcamp?.current?.user) && (auth.user?.role !== "publisher") && 
 						<Link to={`/bootcamp/${bootcampId}/addreview`} className="btn btn-primary btn-block my-3">
 							<i className="fas fa-pencil-alt"></i> Review This Bootcamp
 						</Link>
+						}
 					</div>
 				</div>
 			</div>

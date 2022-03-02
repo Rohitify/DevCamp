@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { createCourse, getCourse, updateCourse } from '../../actions/courseAction';
 
 const AddCourse = ({ editCourse = false }) => {
@@ -31,6 +31,7 @@ const AddCourse = ({ editCourse = false }) => {
 		} else{
 			courseId && dispatch(getCourse(bootcampId, courseId));
 		}
+		// eslint-disable-next-line
 	}, [courseId, current]);
 
 	const handleChange = (e) => {
@@ -40,7 +41,8 @@ const AddCourse = ({ editCourse = false }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		editCourse ? dispatch(updateCourse(bootcampId, courseId, courseDetails)) : dispatch(createCourse(bootcampId, courseDetails));
+		const res = editCourse ? dispatch(updateCourse(bootcampId, courseId, courseDetails)) : dispatch(createCourse(bootcampId, courseDetails));
+		res.then((result) => navigate(-1, { replace: true }));
 		// navigate(-1, { replace: true });
 	}
 
@@ -70,6 +72,7 @@ const AddCourse = ({ editCourse = false }) => {
 										onChange={handleChange}
 										className="form-control"
 										placeholder="Title"
+										required
 									/>
 								</div>
 								<div className="form-group">
@@ -81,6 +84,7 @@ const AddCourse = ({ editCourse = false }) => {
 										onChange={handleChange}
 										placeholder="Duration"
 										className="form-control"
+										required
 									/>
 									<small className="form-text text-muted"
 										>Enter number of weeks course lasts</small
@@ -95,12 +99,13 @@ const AddCourse = ({ editCourse = false }) => {
 										onChange={handleChange}
 										placeholder="Tuition"
 										className="form-control"
+										required
 									/>
 									<small className="form-text text-muted">USD Currency</small>
 								</div>
 								<div className="form-group">
 									<label>Minimum Skill Required</label>
-									<select name="minimumSkill" value={minimumSkill} onChange={handleChange} className="form-control">
+									<select name="minimumSkill" value={minimumSkill} onChange={handleChange} className="form-control" required>
 										<option value="beginner">Beginner (Any)</option>
 										<option value="intermediate">Intermediate</option>
 										<option value="advanced">Advanced</option>
@@ -115,6 +120,7 @@ const AddCourse = ({ editCourse = false }) => {
 										className="form-control"
 										placeholder="Course description summary"
 										maxLength="500"
+										required
 									></textarea>
 									<small className="form-text text-muted"
 										>No more than 500 characters</small
@@ -136,7 +142,7 @@ const AddCourse = ({ editCourse = false }) => {
 								<div className="form-group mt-4">
 									<input
 										type="submit"
-										value="Add Course"
+										value={ editCourse ? "Update Course" : "Create Course" }
 										className="btn btn-dark btn-block"
 									/>
 								</div>

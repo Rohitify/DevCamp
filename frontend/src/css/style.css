@@ -5,7 +5,7 @@ img {
 .showcase {
   position:relative;
   background:url("../resource/img/showcase.jpg") no-repeat center center/cover;
-  min-height:100vh;
+  min-height:93vh;
   color:#fff
 }
 

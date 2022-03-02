@@ -1,4 +1,4 @@
-import { ALL_COURSES, CREATE_COURSE, CURRENT_COURSE, DELETE_COURSE, LOGS_ERROR, SET_COURSES_LOADING, UPDATE_COURSE } from "../actions/types";
+import { ALL_COURSES, COURSES_CLEAR_ERRORS, COURSES_ERROR, CREATE_COURSE, CURRENT_COURSE, DELETE_COURSE, SET_COURSES_LOADING, UPDATE_COURSE } from "../actions/types";
 
 const initialState = {
   courses : [],
@@ -7,7 +7,7 @@ const initialState = {
   error : null
 };
 
-export default (state = initialState, action) => {
+const courseReducer = (state = initialState, action) => {
   switch(action.type) {
     case ALL_COURSES:
       return {
@@ -36,13 +36,20 @@ export default (state = initialState, action) => {
         ...state,
         loading: true
       }
-    case LOGS_ERROR:
-      console.error(action.payload);
+    case COURSES_ERROR:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        loading: false
+      }
+    case COURSES_CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null
       }
     default:
       return state;
   }
 }
+
+export default courseReducer;

@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { setAlert } from '../../actions/alertAction';
 import { updatePassword } from '../../actions/authAction';
 
 const UpdatePassword = () => {
-	const navigate = useNavigate();
+	
 	const { auth } = useSelector(state => state);
 
 	const [passwordData, setPasswordData] = useState({
@@ -23,8 +23,11 @@ const UpdatePassword = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		dispatch(updatePassword(passwordData));
-		// res.then(() => navigate(-1, { replace: true })).catch((err) => console.error(err));
+		if(newPassword === newPassword2) {
+			dispatch(updatePassword(passwordData));
+		} else {
+			dispatch(setAlert("Passwords don't match", "danger", 5000));
+		}
 	}
 
   return (

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { setAlert } from "./alertAction";
 import { CLEAR_ERRORS, LOAD_USER, LOGIN_SUCCESS, LOGOUT, LOGS_ERROR, REGISTER_SUCCESS, SET_LOADING, UPDATE_DETAILS, UPDATE_PASSWORD } from "./types";
 
 const config = {
@@ -17,11 +18,12 @@ export const loadUser = () => async (dispatch) => {
       payload: res.data
     });
   } catch (err) {
-    // console.log(err);
     dispatch({
       type: LOGS_ERROR,
       payload: err.response.data.error
     });
+    dispatch(setAlert(err.response.data.error, "danger", 5000));
+		dispatch(clearError());
   }
 }
 
@@ -39,11 +41,13 @@ export const login = (loginInfo) => async (dispatch) => {
     if(res?.data?.success === true) dispatch(loadUser());
     
   } catch (err) {
-    console.log("err", err.response.data.error);
     dispatch({
       type: LOGS_ERROR,
       payload: err.response.data.error
     });
+    dispatch(setAlert(err.response.data.error, "danger", 5000));
+		dispatch(clearError());
+    // setTimeout(() => { dispatch(clearError()) }, [5000]);
   }
 }
 
@@ -59,13 +63,17 @@ export const register = (registerInfo) => async(dispatch) => {
       payload: res.data
     });
 
-    if(res?.data?.success === true) dispatch(loadUser());
+    if(res?.data?.success === true){
+      dispatch(setAlert("Voila! Registeration Successfull", "success", 5000)); 
+      dispatch(loadUser()); 
+    }
   } catch (err) {
-    console.log(err);
     dispatch({
       type: LOGS_ERROR,
       payload: err.response.data.error
     });
+    dispatch(setAlert(err.response.data.error, "danger", 5000));
+		dispatch(clearError());
   }
 }
 
@@ -78,11 +86,12 @@ export const logout = () => async(dispatch) => {
       type: LOGOUT
     });
   } catch (err) {
-    console.log(err);
     dispatch({
       type: LOGS_ERROR,
       payload: err.response.data.error
     });
+    dispatch(setAlert(err.response.data.error, "danger", 5000));
+		dispatch(clearError());
   }
 }
 
@@ -94,8 +103,14 @@ export const updateDetails = (userDetails) => async (dispatch) => {
       type: UPDATE_DETAILS,
       payload: res.data
     });
+    res?.data?.success && dispatch(setAlert("Voila! Successfully Updated.", "success", 5000));
   } catch (err) {
-    console.error(err);
+    dispatch({
+      type: LOGS_ERROR,
+      payload: err.response.data.error
+    });
+    dispatch(setAlert(err.response.data.error, "danger", 5000));
+		dispatch(clearError());
   }
 }
 
@@ -107,8 +122,14 @@ export const updatePassword = (passwordDetails) => async (dispatch) => {
       type: UPDATE_PASSWORD,
       payload: res.data
     });
+    res?.data?.success && dispatch(setAlert("Voila! Successfully Updated Password.", "success", 5000));
   } catch (err) {
-    console.error(err);
+    dispatch({
+      type: LOGS_ERROR,
+      payload: err.response.data.error
+    });
+    dispatch(setAlert(err.response.data.error, "danger", 5000));
+		dispatch(clearError());
   }
 }
 

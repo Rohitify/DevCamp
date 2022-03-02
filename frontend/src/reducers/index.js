@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import alertReducer from './alertReducer';
 import authReducer from './authReducer';
 import bootcampReducer from './bootcampReducer';
 import courseReducer from './courseReducer';
@@ -10,5 +11,6 @@ export default combineReducers({
   bootcamp: bootcampReducer,
   course: courseReducer,
   review: reviewReducer,
-  user: userReducer
+  user: userReducer,
+  alerts : alertReducer
 });

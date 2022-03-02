@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { deleteReview, getReviews, setLoading } from '../../actions/reviewAction'
+import { deleteReview, getReviews } from '../../actions/reviewAction'
 
 const ReviewRow = ({ review, handleDeleteReview }) => {
 	return(
@@ -31,6 +31,7 @@ const ManageReviews = () => {
 	const reviews = review.reviews;
 	useEffect(() => {
 		dispatch(getReviews(null, userId));
+		// eslint-disable-next-line
 	}, [userId]);
 
 	const onDeleteReview = (reviewId) => {

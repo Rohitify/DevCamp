@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { setAlert } from '../../actions/alertAction';
 import { register } from '../../actions/authAction';
 
 const Register = () => {
@@ -17,24 +18,30 @@ const Register = () => {
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const storedData = useSelector( ({ auth }) => ({ auth }) );
-	const auth = storedData.auth;
+	const { auth } = useSelector( ({ auth }) => ({ auth }) );
 
 	useEffect(() => {
 		if(auth?.isAuthenticated){
 			navigate("/", { replace : true });
 		}
+		// if(auth.error){
+		// 	dispatch(setAlert(auth.error, "danger", 5000));
+		// 	dispatch(clearError());
+		// }
 		// eslint-disable-next-line
 	}, [auth]);
 
 	const handleChange = (e) => {
 		setUser({ ...user, [e.target.name]: e.target.value });
-
 	}
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		dispatch(register(user));
+		if(password === password2) {
+			dispatch(register(user));
+		} else {
+			dispatch(setAlert("Passwords don't match", "danger", 5000));
+		}
 	}
 
   return (
@@ -110,7 +117,7 @@ const Register = () => {
 												name="role"
 												value="user"
 												onChange={handleChange}
-												checked
+												checked={role === "user"}
 											/>
 											<label className="form-check-label">
 												Regular User (Browse, Write reviews, etc)

@@ -1,11 +1,13 @@
 import axios from "axios";
-import { ALL_BOOTCAMPS, CREATE_BOOTCAMP, CURRENT_BOOTCAMP, DELETE_BOOTCAMP, LOGS_ERROR, SET_BOOTCAMPS_LOADING, UPDATE_BOOTCAMP, UPDATE_BOOTCAMP_IMG } from "./types";
+import { setAlert } from "./alertAction";
+import { ALL_BOOTCAMPS, BOOTCAMPS_CLEAR_ERRORS, BOOTCAMPS_ERROR, CREATE_BOOTCAMP, CURRENT_BOOTCAMP, DELETE_BOOTCAMP, SET_BOOTCAMPS_LOADING, UPDATE_BOOTCAMP, UPDATE_BOOTCAMP_IMG } from "./types";
 
 const config = {
   headers : {
     "Content-Type" : "application/json"
   }
 }
+
 
 export const getBootcamps = (q = "/") => async(dispatch) => {
   try {
@@ -19,9 +21,11 @@ export const getBootcamps = (q = "/") => async(dispatch) => {
   
   } catch (err) {
     dispatch({
-      type: LOGS_ERROR,
+      type: BOOTCAMPS_ERROR,
       payload: err.response.data.error
     });
+    dispatch(setAlert(err.response.data.error, "danger", 5000));
+		dispatch(bootcampsClearError());
   }
 }
 
@@ -35,7 +39,12 @@ export const getBootcampsInRadius = (pincode, distance) => async(dispatch) => {
       payload: res.data
     });
   } catch (err) {
-    console.error(err);
+    dispatch({
+      type: BOOTCAMPS_ERROR,
+      payload: err.response.data.error
+    });
+    dispatch(setAlert(err.response.data.error, "danger", 5000));
+		dispatch(bootcampsClearError());
   }
 }
 
@@ -49,7 +58,12 @@ export const getBootcamp = (bootcampId) => async(dispatch) => {
       payload: res.data
     });
   } catch (err) {
-    console.error(err);
+    dispatch({
+      type: BOOTCAMPS_ERROR,
+      payload: err.response.data.error
+    });
+    dispatch(setAlert(err.response.data.error, "danger", 5000));
+		dispatch(bootcampsClearError());
   }
 }
 
@@ -61,8 +75,17 @@ export const createBootcamp = (bootcampDetails) => async (dispatch) => {
       type: CREATE_BOOTCAMP,
       payload: res.data
     });
+    if(res.data?.success){
+      dispatch(setAlert(`${res.data.data.name} Created Successfully`, "success", 5000));
+      return res.data.data._id;
+    }
   } catch (err) {
-    console.error(err);
+    dispatch({
+      type: BOOTCAMPS_ERROR,
+      payload: err.response.data.error
+    });
+    dispatch(setAlert(err.response.data.error, "danger", 5000));
+		dispatch(bootcampsClearError());
   }
 }
 
@@ -74,8 +97,17 @@ export const updateBootcamp = (bootcampId, bootcampDetails) => async (dispatch) 
       type: UPDATE_BOOTCAMP,
       payload: res.data
     });
+    if(res.data?.success){
+      dispatch(setAlert(`${res.data.data.name} Updated Successfully`, "success", 5000));
+      return res.data.data._id;
+    }
   } catch (err) {
-    console.error(err);
+    dispatch({
+      type: BOOTCAMPS_ERROR,
+      payload: err.response.data.error
+    });
+    dispatch(setAlert(err.response.data.error, "danger", 5000));
+		dispatch(bootcampsClearError());
   }
 }
 
@@ -90,9 +122,16 @@ export const addBootcampPhoto = (bootcampId, bootcampImg) => async (dispatch) =>
       type: UPDATE_BOOTCAMP_IMG,
       payload: res.data
     });
+
+    res?.data?.success && dispatch(setAlert(`Photo Updated Successfully`, "success", 5000));
     
   } catch (err) {
-    console.error(err);
+    dispatch({
+      type: BOOTCAMPS_ERROR,
+      payload: err.response.data.error
+    });
+    dispatch(setAlert(err.response.data.error, "danger", 5000));
+		dispatch(bootcampsClearError());
   }
 }
 
@@ -103,10 +142,19 @@ export const deleteBootcamp = (bootcampId) => async (dispatch) => {
 
     dispatch({
       type: DELETE_BOOTCAMP,
-      payload: res.data
+      payload: bootcampId
     });
+    if(res?.data?.success) {
+      dispatch(setAlert(`Bootcamp DELETED Successfully`, "success", 5000));
+      return true;
+    }
   } catch (err) {
-    console.error(err);
+    dispatch({
+      type: BOOTCAMPS_ERROR,
+      payload: err.response.data.error
+    });
+    dispatch(setAlert(err.response.data.error, "danger", 5000));
+		dispatch(bootcampsClearError());
   }
 }
 
@@ -121,4 +169,11 @@ export const currentBootcampNull = (dispatch) => {
     type: CURRENT_BOOTCAMP,
     payload: null
   });
+}
+
+// Clear Errors 
+export const bootcampsClearError = () => {
+  return {
+    type: BOOTCAMPS_CLEAR_ERRORS
+  }
 }

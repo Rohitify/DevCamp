@@ -12,6 +12,7 @@ const NavBar = () => {
   useEffect(() => {
     dispatch(logout());
     navigate("/");
+		// eslint-disable-next-line
   }, [])
 
 	const handleLogout = () => {
@@ -50,7 +51,9 @@ const NavBar = () => {
 					{ (auth?.user?.role === "admin" || auth?.user?.role === "publisher") && 
 					(<NavLink className="dropdown-item" to="/bootcamps/managebootcamplist">Manage Bootcamp</NavLink>)
 					}
-					<NavLink className="dropdown-item" to="/managereviews">Manage Reviews</NavLink>
+					{ (auth?.user?.role === "admin" || auth?.user?.role === "user") && 
+					(<NavLink className="dropdown-item" to="/managereviews">Manage Reviews</NavLink>)
+					}
 					<NavLink className="dropdown-item" to="/manageaccount">Manage Account</NavLink>
 					<div className="dropdown-divider"></div>
 					<a className="dropdown-item" href="/" onClick={handleLogout}>
@@ -61,7 +64,7 @@ const NavBar = () => {
 	}
 
   return (
-    <nav className="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
+    <nav className="navbar navbar-expand-md navbar-dark bg-primary sticky-top">
 			<div className="container">
 				<NavLink className="navbar-brand" to="/"
 					><i className="fas fa-laptop-code"></i> DevCamper</NavLink

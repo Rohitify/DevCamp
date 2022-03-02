@@ -1,5 +1,6 @@
 import axios from "axios";
-import { ALL_COURSES, CREATE_COURSE, CURRENT_COURSE, DELETE_COURSE, LOGS_ERROR, SET_COURSES_LOADING, UPDATE_COURSE } from "./types";
+import { setAlert } from "./alertAction";
+import { ALL_COURSES, CREATE_COURSE, CURRENT_COURSE, DELETE_COURSE, SET_COURSES_LOADING, UPDATE_COURSE, COURSES_ERROR, COURSES_CLEAR_ERRORS } from "./types";
 
 const config = {
   headers : {
@@ -17,7 +18,12 @@ export const getCourses = (bootcampId) => async (dispatch) => {
       payload: res.data
     });
   } catch (err) {
-    console.error(err);
+    dispatch({
+      type: COURSES_ERROR,
+      payload: err.response.data.error
+    });
+    dispatch(setAlert(err.response.data.error, "danger", 5000));
+		dispatch(coursesClearError());
   }
 }
 
@@ -32,7 +38,12 @@ export const getCourse = (bootcampId, courseId) => async (dispatch) => {
       payload: res.data
     })
   } catch (err) {
-    console.error(err);
+    dispatch({
+      type: COURSES_ERROR,
+      payload: err.response.data.error
+    });
+    dispatch(setAlert(err.response.data.error, "danger", 5000));
+		dispatch(coursesClearError());
   }
 }
 
@@ -46,8 +57,17 @@ export const createCourse = (bootcampId, courseDetails) => async (dispatch) => {
       type: CREATE_COURSE,
       payload: res.data
     })
+    if(res.data?.success){
+      dispatch(setAlert(`${res.data.data.title} Created Successfully`, "success", 5000));
+      return true;
+    }
   } catch (err) {
-    console.error(err);
+    dispatch({
+      type: COURSES_ERROR,
+      payload: err.response.data.error
+    });
+    dispatch(setAlert(err.response.data.error, "danger", 5000));
+		dispatch(coursesClearError());
   }
 }
 
@@ -61,8 +81,17 @@ export const updateCourse = (bootcampId, courseId, courseDetails) => async (disp
       type: UPDATE_COURSE,
       payload: res.data
     })
+    if(res.data?.success){
+      dispatch(setAlert(`${res.data.data.title} Updated Successfully`, "success", 5000));
+      return true;
+    }
   } catch (err) {
-    console.error(err);
+    dispatch({
+      type: COURSES_ERROR,
+      payload: err.response.data.error
+    });
+    dispatch(setAlert(err.response.data.error, "danger", 5000));
+		dispatch(coursesClearError());
   }
 }
 
@@ -76,13 +105,26 @@ export const deleteCourse = (bootcampId, courseId) => async (dispatch) => {
       type: DELETE_COURSE,
       payload: courseId
     })
+    res.data?.success && dispatch(setAlert(`Course Deleted Successfully`, "success", 5000));
   } catch (err) {
-    console.error(err);
+    dispatch({
+      type: COURSES_ERROR,
+      payload: err.response.data.error
+    });
+    dispatch(setAlert(err.response.data.error, "danger", 5000));
+		dispatch(coursesClearError());
   }
 }
 
 export const setCoursesLoding = () => {
   return {
     type: SET_COURSES_LOADING
+  }
+}
+
+// Clear Errors 
+export const coursesClearError = () => {
+  return {
+    type: COURSES_CLEAR_ERRORS
   }
 }

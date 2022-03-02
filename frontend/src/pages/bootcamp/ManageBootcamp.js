@@ -15,6 +15,7 @@ const ManageBootcamp = () => {
 	
 	useEffect(() => {
 		dispatch(getBootcamp(bootcampId));
+		// eslint-disable-next-line
 	}, [bootcampId]);
 
 	// useEffect(() => {
@@ -33,8 +34,11 @@ const ManageBootcamp = () => {
 	}
 
 	const handleDelete = () => {
-		dispatch(deleteBootcamp(bootcampId));
-		navigate(-1, { replace: true });
+		const res = dispatch(deleteBootcamp(bootcampId));
+		// navigate(-1, { replace: true });
+		res.then((result) => {
+			result && navigate(-1, { replace: true });
+		});
 	}
 
 	const handleUploadImg = (e) => {
@@ -64,7 +68,7 @@ const ManageBootcamp = () => {
 									<div className="form-group">
 										<div className="custom-file">
 											<input type="file" name="photo" className="custom-file-input" id="photo"
-												accept='image/*' onChange={handleChange}
+												accept='image/*' onChange={handleChange} required
 											/>
 											<label className="custom-file-label" htmlFor="photo" > 
 												{bootcampImg?.name || "Add Bootcamp Image"}

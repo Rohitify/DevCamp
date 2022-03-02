@@ -8,7 +8,7 @@ const initialState = {
   error: null
 }
 
-export default (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
   switch(action.type) {
     case LOAD_USER:
     case UPDATE_DETAILS:
@@ -46,7 +46,8 @@ export default (state = initialState, action) => {
       // console.error(action.payload);
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        loading: false
       }
     case CLEAR_ERRORS:
       return {
@@ -57,3 +58,5 @@ export default (state = initialState, action) => {
       return state;
   }
 }
+
+export default authReducer;

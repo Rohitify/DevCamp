@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
 import { deleteCourse, getCourses } from '../../actions/courseAction';
 import BootcampBox from '../../components/BootcampBox';
-import ManageNoneCourses from './ManageNoneCourses';
 
 const CourseRow = ({ course, handleDelete }) => {
 	return(
@@ -46,7 +45,8 @@ const ManageCourses = () => {
 	const { courses } = course;
 
 	useEffect(() => {
-		dispatch(getCourses(current._id))
+		dispatch(getCourses(current._id));
+		// eslint-disable-next-line
 	}, [current]);
 
 	const handleDelete = (courseId) => {

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getBootcamps } from '../../actions/bootcampAction';
-import { CURRENT_BOOTCAMP } from '../../actions/types';
 import BootcampBox from '../../components/BootcampBox';
 
 const ManageBootcampList = () => {
@@ -12,6 +11,7 @@ const ManageBootcampList = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getBootcamps(`?user=${auth?.user?._id}`));
+    // eslint-disable-next-line
   }, [auth]);
 
 

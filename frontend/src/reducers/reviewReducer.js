@@ -1,4 +1,4 @@
-import { ALL_REVIEWS, CREATE_REVIEW, CURRENT_REVIEW, DELETE_REVIEW, LOGS_ERROR, SET_LOADING, SET_REVIEW_LOADING, UPDATE_REVIEW } from "../actions/types";
+import { ALL_REVIEWS, CREATE_REVIEW, CURRENT_REVIEW, DELETE_REVIEW, REVIEWS_CLEAR_ERRORS, REVIEWS_ERROR, SET_REVIEW_LOADING, UPDATE_REVIEW } from "../actions/types";
 
 const initialState = {
   reviews : [],
@@ -7,7 +7,7 @@ const initialState = {
   error : null
 };
 
-export default (state = initialState, action) => {
+const reviewReducer = (state = initialState, action) => {
   switch(action.type) {
     case ALL_REVIEWS:
       return {
@@ -36,13 +36,20 @@ export default (state = initialState, action) => {
         ...state,
         loading: true
       }
-    case LOGS_ERROR:
-      console.error(action.payload);
+    case REVIEWS_ERROR:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        loading: false
+      }
+    case REVIEWS_CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null
       }
     default:
       return state;
   }
 }
+
+export default reviewReducer;

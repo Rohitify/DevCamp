@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes} from "react-router-dom";
+import { Route, Routes} from "react-router-dom";
 
 import "./css/bootstrap.css";
 import "./css/style.css";
@@ -25,12 +25,14 @@ import AddReview from "./pages/review/AddReview";
 import ManageAccount from "./pages/auth/ManageAccount";
 import UpdatePassword from "./pages/auth/UpdatePassword";
 import RequireAuth from "./components/RequireAuth";
+import Alert from "./components/Alert";
 
 function App() {
   const allUser = ["admin", "publisher", "user"]
   return (
     <Provider store={store}>
           <NavBar />
+          <Alert />
         <Routes>
           <Route path="/" element={<Showcase />} />
           <Route path="/login" element={<Login />} />

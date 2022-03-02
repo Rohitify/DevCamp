@@ -27,6 +27,7 @@ const AddReview = ({ editReview = false }) => {
 		} else{
 			reviewId && dispatch(getReview(reviewId));
 		}
+		// eslint-disable-next-line
 	}, [current, reviewId]);
 	
 	const handleChange = (e) => {
@@ -35,8 +36,14 @@ const AddReview = ({ editReview = false }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		editReview ? dispatch(updateReview(reviewId, reviewDetails)) : dispatch(createReview(bootcampId, reviewDetails));
-		// if(!review.loading) navigate(-1, {replace: true});
+		let res; 
+		if(editReview){
+			res = dispatch(updateReview(reviewId, reviewDetails));
+			res.then((result) => navigate(-1, {replace: true}));
+		} else {
+			res = dispatch(createReview(bootcampId, reviewDetails));
+			res.then((result) => navigate(`/bootcamp/${bootcampId}/reviews`, {replace: true}));
+		}
 	}
 
 
@@ -51,7 +58,7 @@ const AddReview = ({ editReview = false }) => {
 								<i className="fas fa-chevron-left"></i> Bootcamp Info
 							</button>
 							<h1 className="mb-2">DevWorks Bootcamp</h1>
-							<h3 className="text-primary mb-4">Write a Review</h3>
+							<h3 className="text-primary mb-4">{editReview ? "Update" : "Add"} a Review</h3>
 							<p>
 								You must have attended and graduated this bootcamp to review
 							</p>
@@ -70,6 +77,7 @@ const AddReview = ({ editReview = false }) => {
 											value={rating}
 											onChange={handleChange}
 											id="rating"
+											required
 										/>
 									</div>
 									<div className="form-group">
@@ -80,6 +88,8 @@ const AddReview = ({ editReview = false }) => {
 											onChange={handleChange}
 											className="form-control"
 											placeholder="Review title"
+											maxLength={100}
+											required
 										/>
 									</div>
 									<div className="form-group">
@@ -90,12 +100,14 @@ const AddReview = ({ editReview = false }) => {
 											onChange={handleChange}
 											className="form-control"
 											placeholder="Your review"
+											maxLength={1000}
+											required
 										></textarea>
 									</div>
 									<div className="form-group">
 										<input
 											type="submit"
-											value="Submit Review"
+											value={editReview ? "Update Review" : "Add Review"}
 											className="btn btn-dark btn-block"
 										/>
 									</div>

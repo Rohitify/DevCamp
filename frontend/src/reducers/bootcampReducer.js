@@ -1,4 +1,4 @@
-import { ALL_BOOTCAMPS, CREATE_BOOTCAMP, CURRENT_BOOTCAMP, DELETE_BOOTCAMP, LOGS_ERROR, SET_BOOTCAMPS_LOADING, UPDATE_BOOTCAMP, UPDATE_BOOTCAMP_IMG } from "../actions/types";
+import { ALL_BOOTCAMPS, BOOTCAMPS_CLEAR_ERRORS, BOOTCAMPS_ERROR, CREATE_BOOTCAMP, CURRENT_BOOTCAMP, DELETE_BOOTCAMP, SET_BOOTCAMPS_LOADING, UPDATE_BOOTCAMP, UPDATE_BOOTCAMP_IMG } from "../actions/types";
 
 const initialState = {
   bootcamps : [],
@@ -8,7 +8,7 @@ const initialState = {
   error : null
 };
 
-export default (state = initialState, action) => {
+const bootcampReducer = (state = initialState, action) => {
   switch(action.type) {
     case ALL_BOOTCAMPS:
       return {
@@ -49,7 +49,7 @@ export default (state = initialState, action) => {
     case DELETE_BOOTCAMP:
       return {
         ...state,
-        bootcamps: state.bootcamps.filter(bootcamp => bootcamp._id !== state.current._id),
+        bootcamps: state.bootcamps.filter(bootcamp => bootcamp._id !== action.payload),
         loading: false
       }
     case SET_BOOTCAMPS_LOADING: 
@@ -57,13 +57,20 @@ export default (state = initialState, action) => {
         ...state,
         loading: true
       }
-    case LOGS_ERROR:
-      // console.error(action.payload);
+    case BOOTCAMPS_ERROR:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        loading: false
+      }
+    case BOOTCAMPS_CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null
       }
     default:
       return state;
   }
 }
+
+export default bootcampReducer;
