@@ -1,7 +1,7 @@
 node_modules/
 /backEnd/public/uploads
 /backEnd/config/config.env
-config/config.env
+/config/config.env
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
