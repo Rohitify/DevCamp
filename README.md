@@ -2,7 +2,7 @@
 MERN Stack project for Developer BootCamp
 
 <h2>CheckOut the Website On</h2>
-https://mysterious-savannah-89916.herokuapp.com
+https://devcamperweb.herokuapp.com/
 
 1. download the zip file or clone it
 2. extract the file and open with the editor (e.g. VS Code)
@@ -31,7 +31,7 @@ https://mysterious-savannah-89916.herokuapp.com
 <br />
 <table>
   <tr>
-   <td><img src="https://user-images.githubusercontent.com/55020650/111153074-7c8c2200-85b7-11eb-87bb-940adb1ab74f.jpg" width="700" height="500"></td>
+   <td><img src="" width="700" height="500"></td>
    <td>
     <h3>Contact Me</h3>
 <ul>
