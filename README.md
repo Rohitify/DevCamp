@@ -8,6 +8,7 @@ https://devcamperweb.herokuapp.com/
 2. extract the file and open with the editor (e.g. VS Code)
 3. open terminal and go to the file directory
 
+
 4. Usage  
   Install the dependency
   
@@ -31,7 +32,7 @@ https://devcamperweb.herokuapp.com/
 <br />
 <table>
   <tr>
-   <td><img src="" width="700" height="500"></td>
+   <td><img src="https://user-images.githubusercontent.com/55020650/158893154-e7dbfafe-5226-4af0-8a4b-cc1efdb78bff.png" width="700" height="500"></td>
    <td>
     <h3>Contact Me</h3>
 <ul>
@@ -48,3 +49,5 @@ https://devcamperweb.herokuapp.com/
    </td>
  </tr>
  </table>
+ 
+<!--  ![image](https://user-images.githubusercontent.com/55020650/158893154-e7dbfafe-5226-4af0-8a4b-cc1efdb78bff.png) -->
