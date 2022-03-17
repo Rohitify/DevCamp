@@ -14,6 +14,7 @@ const authReducer = (state = initialState, action) => {
     case UPDATE_DETAILS:
       return {
         ...state,
+        isAuthenticated: true,
         user: action.payload.data,
         loading: false
       }

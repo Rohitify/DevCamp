@@ -77,7 +77,6 @@ export const createBootcamp = (bootcampDetails) => async (dispatch) => {
     });
     if(res.data?.success){
       dispatch(setAlert(`${res.data.data.name} Created Successfully`, "success", 5000));
-      return res.data.data._id;
     }
   } catch (err) {
     dispatch({
@@ -99,7 +98,6 @@ export const updateBootcamp = (bootcampId, bootcampDetails) => async (dispatch) 
     });
     if(res.data?.success){
       dispatch(setAlert(`${res.data.data.name} Updated Successfully`, "success", 5000));
-      return res.data.data._id;
     }
   } catch (err) {
     dispatch({
@@ -146,7 +144,6 @@ export const deleteBootcamp = (bootcampId) => async (dispatch) => {
     });
     if(res?.data?.success) {
       dispatch(setAlert(`Bootcamp DELETED Successfully`, "success", 5000));
-      return true;
     }
   } catch (err) {
     dispatch({

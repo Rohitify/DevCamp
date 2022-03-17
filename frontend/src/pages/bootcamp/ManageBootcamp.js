@@ -33,12 +33,9 @@ const ManageBootcamp = () => {
 		setBootcampImg( e.target.files[0] )
 	}
 
-	const handleDelete = () => {
-		const res = dispatch(deleteBootcamp(bootcampId));
-		// navigate(-1, { replace: true });
-		res.then((result) => {
-			result && navigate(-1, { replace: true });
-		});
+	const handleDelete = async () => {
+		await dispatch(deleteBootcamp(bootcampId));
+		await navigate(-1, { replace: true });
 	}
 
 	const handleUploadImg = (e) => {

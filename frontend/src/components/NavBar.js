@@ -1,22 +1,21 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
-import { logout } from "../actions/authAction";
+import { NavLink } from "react-router-dom";
+import { loadUser, logout } from "../actions/authAction";
 
 const NavBar = () => {
 	const [showMenu, setShowMenu] = useState(false);
 	const [showSubMenu, setShowSubMenu] = useState(false);
 	const dispatch = useDispatch()
 
-	const navigate = useNavigate();
-  useEffect(() => {
-    dispatch(logout());
-    navigate("/");
+  useEffect(() => { 
+    dispatch(loadUser());
+    // navigate("/");
 		// eslint-disable-next-line
   }, [])
 
-	const handleLogout = () => {
-		dispatch(logout());
+	const handleLogout = async () => {
+		await dispatch(logout());
 	}
 
 	const { auth } = useSelector(({ auth }) => ({ auth }));
@@ -56,8 +55,8 @@ const NavBar = () => {
 					}
 					<NavLink className="dropdown-item" to="/manageaccount">Manage Account</NavLink>
 					<div className="dropdown-divider"></div>
-					<a className="dropdown-item" href="/" onClick={handleLogout}>
-						<i className="fas fa-sign-out-alt"></i> Logout</a>
+					<NavLink className="dropdown-item" to="/" onClick={handleLogout}>
+						<i className="fas fa-sign-out-alt"></i> Logout</NavLink>
 				</div>
 			</li>
 			</>)

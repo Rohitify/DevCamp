@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Filter from '../../components/Filter';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { getBootcamps, getBootcampsInRadius } from '../../actions/bootcampAction';
 import BootcampBox from '../../components/BootcampBox';
 
@@ -91,7 +91,7 @@ const Bootcamps = ({ allBootcamps = false }) => {
 
 
 						{/* <!-- Pagination --> */}
-						<nav aria-label="Page navigation example">
+						{/* <nav aria-label="Page navigation example">
 							<ul className="pagination">
 								<li className="page-item">
 									<NavLink className="page-link" to="#">Previous</NavLink>
@@ -103,7 +103,7 @@ const Bootcamps = ({ allBootcamps = false }) => {
 									<NavLink className="page-link" to="#">Next</NavLink>
 								</li>
 							</ul>
-						</nav>
+						</nav> */}
 					</div>
 				</div>
 			</div>

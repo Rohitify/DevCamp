@@ -32,7 +32,7 @@ const Bootcamp = () => {
 
   return (
     <section className="bootcamp mt-5">
-       <div className="container pt-5">
+       <div className="container">
          <div className="row">
 					 {/* Main col  */}
            <div className="col-md-8">

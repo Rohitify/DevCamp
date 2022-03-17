@@ -46,15 +46,15 @@ const AddBootcamp = ({ editBootcamp = false }) => {
 		setBootcampData({ ...bootcampData, [e.target.name] : careersValue });
 	}
  
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		let res;
 		if(editBootcamp === true){
-			res = dispatch(updateBootcamp(currentBootcamp._id, bootcampData));
+			await dispatch(updateBootcamp(currentBootcamp._id, bootcampData));
 		} else {
-			res = dispatch(createBootcamp(bootcampData));
+			await dispatch(createBootcamp(bootcampData));
 		}
-		res.then((bootcampId) => navigate(`/bootcamp/${bootcampId}/managebootcamp`, { replace : true }));
+		// res.then((bootcampId) => navigate(`/bootcamp/${bootcampId}/managebootcamp`, { replace : true }));
+		await navigate(`/bootcamp/${currentBootcamp._id}/managebootcamp`, { replace : true });
 	}
 
 	
@@ -245,7 +245,7 @@ const AddBootcamp = ({ editBootcamp = false }) => {
 			}
 					<button className="btn btn-danger btn-block mb-4"
 						onClick={() => navigate(-1, { replace: true })}
-					>Cancel</button>
+					>Go Back</button>
 		</section>
   )
 }

@@ -22,7 +22,7 @@ export const loadUser = () => async (dispatch) => {
       type: LOGS_ERROR,
       payload: err.response.data.error
     });
-    dispatch(setAlert(err.response.data.error, "danger", 5000));
+    // dispatch(setAlert(err.response.data.error, "danger", 5000));
 		dispatch(clearError());
   }
 }

@@ -59,7 +59,6 @@ export const createCourse = (bootcampId, courseDetails) => async (dispatch) => {
     })
     if(res.data?.success){
       dispatch(setAlert(`${res.data.data.title} Created Successfully`, "success", 5000));
-      return true;
     }
   } catch (err) {
     dispatch({
@@ -83,7 +82,6 @@ export const updateCourse = (bootcampId, courseId, courseDetails) => async (disp
     })
     if(res.data?.success){
       dispatch(setAlert(`${res.data.data.title} Updated Successfully`, "success", 5000));
-      return true;
     }
   } catch (err) {
     dispatch({

@@ -39,11 +39,11 @@ const AddCourse = ({ editCourse = false }) => {
 		setCourseDetails({ ...courseDetails, [e.target.name] : valueData });
 	}
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		const res = editCourse ? dispatch(updateCourse(bootcampId, courseId, courseDetails)) : dispatch(createCourse(bootcampId, courseDetails));
-		res.then((result) => navigate(-1, { replace: true }));
-		// navigate(-1, { replace: true });
+		editCourse ? await dispatch(updateCourse(bootcampId, courseId, courseDetails)) : await dispatch(createCourse(bootcampId, courseDetails));
+		// res.then((result) => navigate(-1, { replace: true }));
+		await navigate(-1, { replace: true });
 	}
 
   return (

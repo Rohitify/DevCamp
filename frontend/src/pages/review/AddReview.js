@@ -34,15 +34,14 @@ const AddReview = ({ editReview = false }) => {
 		setReviewDetails({ ...reviewDetails, [e.target.name] : e.target.value });
 	}
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		let res; 
 		if(editReview){
-			res = dispatch(updateReview(reviewId, reviewDetails));
-			res.then((result) => navigate(-1, {replace: true}));
+			await dispatch(updateReview(reviewId, reviewDetails));
+			await navigate(-1, {replace: true});
 		} else {
-			res = dispatch(createReview(bootcampId, reviewDetails));
-			res.then((result) => navigate(`/bootcamp/${bootcampId}/reviews`, {replace: true}));
+			await dispatch(createReview(bootcampId, reviewDetails));
+			await navigate(`/bootcamp/${bootcampId}/reviews`, {replace: true});
 		}
 	}
 
