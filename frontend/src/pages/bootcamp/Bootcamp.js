@@ -72,7 +72,7 @@ const Bootcamp = () => {
            <div className="col-md-4">
 						 {/* <!-- Image --> */}
 						 { current?.photo && 
-						 	<img src={`http://localhost:5000/uploads/${current?.photo}`} 			className="img-thumbnail" alt="" />
+						 	<img src={`/uploads/${current?.photo}`} 			className="img-thumbnail" alt="" />
 						 }
 						 {/* <!-- Rating --> */}
 						 <h1 className="text-center my-4"><span className="badge badge-secondary badge-success rounded-circle p-3"> {current?.averageRating} </span> Rating</h1>
