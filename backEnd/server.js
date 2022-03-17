@@ -46,7 +46,12 @@ app.use(fileupload());
 app.use(mongoSanitize());
 
 // Set security headers 
-app.use(helmet());
+app.use(helmet.contentSecurityPolicy({
+  useDefaults: true,
+  directives: {
+    "img-src": ["'self'", "https: data:"]
+  }
+}));
 
 // stop html tag in data to prevent XSS Attacks
 app.use(xss());
