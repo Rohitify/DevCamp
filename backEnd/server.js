@@ -65,8 +65,7 @@ app.use(hpp());
 // Enable CORS for others domain to use public api 
 app.use(cors());
 
-const __dirname = path.resolve()
-
+console.log(__dirname); 
 // Set static folder 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -76,11 +75,12 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", usersRoutes);
 app.use("/api/v1/reviews", reviewsRoutes);
 
+
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '/frontend/build')))
+  app.use(express.static(path.join(__dirname, '../frontend/build')))
 
   app.get('*', (req, res) =>
-    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+    res.sendFile(path.resolve(__dirname, '../frontend', 'build', 'index.html'))
   )
 } else {
   app.get('/', (req, res) => {
