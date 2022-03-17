@@ -65,6 +65,8 @@ app.use(hpp());
 // Enable CORS for others domain to use public api 
 app.use(cors());
 
+const __dirname = path.resolve()
+
 // Set static folder 
 app.use(express.static(path.join(__dirname, "public")));
 
