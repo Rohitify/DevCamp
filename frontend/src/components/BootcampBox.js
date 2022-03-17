@@ -7,7 +7,7 @@ const BootcampBox = ({ bootcamp, editBootcamp=false }) => {
     <div key={bootcamp._id} className="card mb-3">
       <div className="row no-gutters">
         <div className="col-md-4 my-auto">
-          <img src={`http://localhost:5000/uploads/${bootcamp?.photo}`} className="card-img" alt="..." />
+          <img src={`/uploads/${bootcamp?.photo}`} className="card-img" alt="..." />
         </div>
         <div className="col-md-8">
           <div className="card-body">
