@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { loadUser, logout } from "../actions/authAction";
 
 const NavBar = () => {
@@ -55,8 +55,8 @@ const NavBar = () => {
 					}
 					<NavLink className="dropdown-item" to="/manageaccount">Manage Account</NavLink>
 					<div className="dropdown-divider"></div>
-					<NavLink className="dropdown-item" to="/" onClick={handleLogout}>
-						<i className="fas fa-sign-out-alt"></i> Logout</NavLink>
+					<Link className="dropdown-item" to="/" onClick={handleLogout}>
+						<i className="fas fa-sign-out-alt"></i> Logout</Link>
 				</div>
 			</li>
 			</>)

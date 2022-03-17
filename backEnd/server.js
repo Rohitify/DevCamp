@@ -21,7 +21,7 @@ const usersRoutes = require("./routes/users");
 const reviewsRoutes = require("./routes/reviews");
 
 //Load ENV variables
-dotenv.config({ path : "./config/config.env" });
+dotenv.config({ path : "../config/config.env" });
 
 // Connect to database
 connectDB();
@@ -73,6 +73,18 @@ app.use("/api/v1/courses", coursesRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", usersRoutes);
 app.use("/api/v1/reviews", reviewsRoutes);
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/frontend/build')))
+
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+  )
+} else {
+  app.get('/', (req, res) => {
+    res.send('API is running....')
+  })
+}
 
 app.use(errorHandler);
 
