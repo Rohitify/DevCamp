@@ -4,8 +4,8 @@
   "description": "Camp info of verious dev program",
   "main": "server.js",
   "scripts": {
-    "start": "node backEnd/server",
-    "server": "nodemon backEnd/server",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "node backEnd/server",
     "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
