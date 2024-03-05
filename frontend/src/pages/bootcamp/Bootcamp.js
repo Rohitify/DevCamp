@@ -84,6 +84,11 @@ const Bootcamp = () => {
 						 <a href={current?.website || "#"} target={current?.website ? "_blank" : '_self'} rel='noreferrer' className="btn btn-secondary btn-block my-3"><i className="fas fa-globe"></i>Visit Website</a>
 						 {/* <!-- Map --> */}
 						 {/* <div id='map' style={{width: "100%", height: "300px"}}></div> */}
+						 <div id='map' style={{width: "100%", height: "auto"}}>
+							{ current?.address.split(",").map((loc) => {
+								return (<div>{loc}</div>)
+							}) }
+						 </div>
 						 {/* <!-- Perks --> */}
              <ul className="list-group list-group-flush mt-4">
                 <li className="list-group-item">

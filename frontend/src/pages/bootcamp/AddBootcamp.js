@@ -50,11 +50,13 @@ const AddBootcamp = ({ editBootcamp = false }) => {
 		e.preventDefault();
 		if(editBootcamp === true){
 			await dispatch(updateBootcamp(currentBootcamp._id, bootcampData));
+			await navigate(`/bootcamp/${currentBootcamp?._id}/managebootcamp`, { replace : true });
 		} else {
 			await dispatch(createBootcamp(bootcampData));
+			await navigate(`/bootcamp/${currentBootcamp?._id}/managebootcamp`, { replace : true });
 		}
 		// res.then((bootcampId) => navigate(`/bootcamp/${bootcampId}/managebootcamp`, { replace : true }));
-		await navigate(`/bootcamp/${currentBootcamp._id}/managebootcamp`, { replace : true });
+		// await navigate(`/bootcamp/${currentBootcamp?._id}/managebootcamp`, { replace : true });
 	}
 
 	
