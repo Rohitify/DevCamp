@@ -4,7 +4,7 @@
   "description": "Camp info of verious dev program",
   "main": "server.js",
   "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "node backEnd/server",
     "server": "node backEnd/server",
     "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
